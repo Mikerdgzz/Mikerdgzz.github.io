@@ -9,975 +9,1131 @@
 <style>
 :root {
   --ink: #1a1208;
-  --paper: #f5f0e8;
-  --cream: #ede8dc;
+  --paper: #f7f2ea;
+  --cream: #ede7d8;
   --gold: #c8922a;
   --gold-light: #e8c068;
   --teal: #1a7a6e;
-  --teal-light: #2da898;
+  --teal-mid: #249b8c;
+  --teal-light: #2db8a8;
   --rust: #c05a2a;
   --slate: #4a5568;
   --muted: #8a8070;
-  --border: rgba(26,18,8,0.12);
+  --border: rgba(26,18,8,0.1);
+  --shadow: 0 2px 16px rgba(26,18,8,0.07);
+  --shadow-lg: 0 8px 40px rgba(26,18,8,0.13);
+  --booking: #003b95;
+  --airbnb: #ff385c;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{
-  background:var(--paper);
-  color:var(--ink);
-  font-family:'DM Sans',sans-serif;
-  font-size:15px;
-  line-height:1.6;
-}
+body{background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.65}
 
 /* ── COVER ── */
 .cover{
-  position:relative;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  padding:4rem 5%;
-  overflow:hidden;
-  background:#0d1a1f;
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:5rem 6%;overflow:hidden;background:#091612;
 }
 .cover-bg{
   position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(29,110,98,0.35) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 80% at 20% 80%, rgba(200,146,42,0.2) 0%, transparent 50%),
-    linear-gradient(160deg, #0d1a1f 0%, #152a24 40%, #0d1a1f 100%);
+    radial-gradient(ellipse 75% 55% at 68% 30%, rgba(26,122,110,0.42) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 65% at 20% 75%, rgba(200,146,42,0.2) 0%, transparent 55%),
+    linear-gradient(165deg,#091612 0%,#132a20 45%,#0a1a14 100%);
 }
 .cover-grid{
   position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(245,240,232,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245,240,232,0.04) 1px, transparent 1px);
-  background-size:60px 60px;
+  background-image:linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);
+  background-size:72px 72px;
 }
-.cover-noise{
-  position:absolute;inset:0;
-  opacity:.025;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:200px 200px;
-}
-.cover-content{position:relative;z-index:2;max-width:900px}
+/* mountain silhouette SVG */
+.cover-mountains{position:absolute;bottom:0;left:0;right:0;z-index:1}
+.cover-content{position:relative;z-index:2;max-width:1000px}
+
 .cover-eyebrow{
-  font-family:'DM Mono',monospace;
-  font-size:11px;letter-spacing:3px;
-  color:var(--gold-light);
-  text-transform:uppercase;
-  margin-bottom:1.5rem;
-  display:flex;align-items:center;gap:12px;
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;
+  color:var(--gold-light);text-transform:uppercase;
+  margin-bottom:1.5rem;display:flex;align-items:center;gap:14px;opacity:.9;
 }
-.cover-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--gold)}
+.cover-eyebrow::before{content:'';display:block;width:42px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+
 .cover-title{
   font-family:'Playfair Display',serif;
-  font-size:clamp(4rem,9vw,8rem);
-  font-weight:900;
-  line-height:.92;
-  color:#f5f0e8;
-  letter-spacing:-2px;
-  margin-bottom:1.5rem;
+  font-size:clamp(4.5rem,11vw,9.5rem);
+  font-weight:900;line-height:.87;color:#f7f2ea;
+  letter-spacing:-3px;margin-bottom:2rem;
 }
-.cover-title em{
-  font-style:italic;
-  color:var(--gold-light);
-}
-.cover-sub{
-  font-size:15px;
-  color:rgba(245,240,232,0.55);
-  margin-bottom:3rem;
-  max-width:480px;
-  line-height:1.7;
-}
-.cover-stats{
-  display:flex;gap:0;
-  border:1px solid rgba(245,240,232,0.12);
-  border-radius:2px;
-  overflow:hidden;
-  width:fit-content;
-  margin-bottom:2rem;
-}
-.cover-stat{
-  padding:14px 24px;
-  border-right:1px solid rgba(245,240,232,0.12);
-  background:rgba(245,240,232,0.04);
-}
-.cover-stat:last-child{border-right:none}
-.cs-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#f5f0e8;display:block}
-.cs-lbl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(245,240,232,0.4);text-transform:uppercase}
-.cover-scroll{
-  display:flex;align-items:center;gap:8px;
-  font-family:'DM Mono',monospace;font-size:10px;
-  color:rgba(245,240,232,0.3);letter-spacing:2px;
-  text-transform:uppercase;
-}
-.scroll-line{width:40px;height:1px;background:rgba(245,240,232,0.2)}
+.cover-title em{font-style:italic;color:var(--gold-light)}
 
-/* ── NAV TABS ── */
+.cover-meta{display:flex;gap:0;margin-bottom:3rem;border:1px solid rgba(255,255,255,.1);border-radius:3px;overflow:hidden;width:fit-content}
+.cmi{padding:14px 22px;border-right:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04)}
+.cmi:last-child{border-right:none}
+.cmi-val{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#f7f2ea;display:block;line-height:1}
+.cmi-lbl{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:2px;color:rgba(247,242,234,.35);text-transform:uppercase;margin-top:3px;display:block}
+
+.cover-tags{display:flex;gap:8px;flex-wrap:wrap}
+.ctag{padding:5px 13px;border:1px solid rgba(247,242,234,.14);border-radius:2px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(247,242,234,.45)}
+.ctag.hi{border-color:rgba(232,192,104,.4);color:var(--gold-light);background:rgba(232,192,104,.07)}
+
+/* ── STICKY NAV ── */
 .sticky-nav{
   position:sticky;top:0;z-index:100;
-  background:rgba(245,240,232,0.95);
-  backdrop-filter:blur(12px);
+  background:rgba(247,242,234,.97);backdrop-filter:blur(16px);
   border-bottom:1px solid var(--border);
-  padding:0 5%;
-  display:flex;align-items:center;gap:0;
+  display:flex;align-items:center;
 }
+.nav-brand{
+  font-family:'Playfair Display',serif;font-size:15px;font-weight:700;
+  color:var(--ink);padding:0 4%;white-space:nowrap;flex-shrink:0;
+}
+.nav-tabs{display:flex;flex:1;overflow-x:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
 .nav-tab{
-  padding:16px 20px;
-  font-family:'DM Mono',monospace;
-  font-size:11px;letter-spacing:1.5px;
-  text-transform:uppercase;
-  color:var(--muted);
-  cursor:pointer;
-  border:none;background:none;
-  border-bottom:2px solid transparent;
-  transition:all .2s;
-  white-space:nowrap;
+  padding:17px 17px;
+  font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--muted);
+  cursor:pointer;border:none;background:none;
+  border-bottom:2.5px solid transparent;transition:all .2s;white-space:nowrap;
 }
 .nav-tab.active,.nav-tab:hover{color:var(--ink);border-bottom-color:var(--gold)}
-.nav-brand{
-  font-family:'Playfair Display',serif;
-  font-size:16px;font-weight:700;
-  color:var(--ink);
-  margin-right:auto;
-  padding:16px 0;
-}
 
 /* ── SECTIONS ── */
-.section{display:none;padding:5% 5% 6%}
+.section{display:none;padding:4.5% 6% 7%;max-width:1200px;margin:0 auto}
 .section.active{display:block}
-.section-header{margin-bottom:3rem}
-.section-label{
-  font-family:'DM Mono',monospace;
-  font-size:10px;letter-spacing:3px;text-transform:uppercase;
-  color:var(--gold);display:flex;align-items:center;gap:10px;
-  margin-bottom:.75rem;
-}
-.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.section-title{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2rem,4vw,3.5rem);
-  font-weight:700;line-height:1.1;
-  color:var(--ink);
-}
-.section-title em{font-style:italic;color:var(--teal)}
 
-/* ── DAYS GRID ── */
-.days-grid{display:flex;flex-direction:column;gap:2px}
-.day-row{
-  display:grid;
-  grid-template-columns:80px 1fr;
-  border:1px solid var(--border);
-  border-radius:3px;
-  overflow:hidden;
-  transition:transform .2s,box-shadow .2s;
+.sec-eyebrow{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--gold);
+  display:flex;align-items:center;gap:12px;margin-bottom:.6rem;
+}
+.sec-eyebrow::after{content:'';width:50px;height:1px;background:var(--gold);opacity:.4}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,4.5vw,3.6rem);
+  font-weight:700;line-height:1.06;color:var(--ink);margin-bottom:2.75rem;
+}
+.sec-title em{font-style:italic;color:var(--teal)}
+
+/* ── DAY CARDS ── */
+.days-stack{display:flex;flex-direction:column;gap:3px}
+.day-card{
+  background:#fff;border:1px solid var(--border);
+  border-radius:5px;overflow:hidden;
+  transition:box-shadow .25s,transform .2s;
+}
+.day-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-1px)}
+
+/* left accent by type */
+.day-card.type-log{border-left:4px solid var(--gold)}
+.day-card.type-trek{border-left:4px solid #4caf50}
+.day-card.type-ferry{border-left:4px solid #2196f3}
+.day-card.type-beach{border-left:4px solid var(--teal-light)}
+.day-card.type-city{border-left:4px solid #9c6fde}
+.day-card.type-return{border-left:4px solid var(--rust)}
+
+.day-top{display:grid;grid-template-columns:86px 1fr}
+
+.day-num{
+  background:var(--ink);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:1.75rem .5rem;gap:3px;flex-shrink:0;
+}
+.day-num-n{font-family:'Playfair Display',serif;font-size:2.75rem;font-weight:900;color:var(--gold-light);line-height:1}
+.day-num-l{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:2px;color:rgba(247,242,234,.3);text-transform:uppercase}
+
+.day-body{padding:1.5rem 1.75rem 1.25rem}
+
+.day-name{font-family:'Playfair Display',serif;font-size:1.22rem;font-weight:700;color:var(--ink);margin-bottom:2px}
+.day-date{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-bottom:1.1rem}
+
+.day-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem}
+.slot{background:var(--cream);padding:10px 13px;border-radius:3px}
+.slot-time{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;margin-bottom:5px}
+.slot-text{font-size:12.5px;color:var(--slate);line-height:1.55}
+
+.day-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.dtag{padding:3px 10px;border-radius:2px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;font-weight:500}
+.dtag-trek{background:#e4f2da;color:#2a6010}
+.dtag-beach{background:#d9edec;color:#0d6555}
+.dtag-city{background:#e5dff8;color:#3a2888}
+.dtag-drive{background:#f4ece0;color:#7a3a12}
+.dtag-log{background:#f0ece0;color:#5a4a20}
+.dtag-ferry{background:#dae8f8;color:#0d4a7a}
+.dtag-special{background:#fef3d8;color:#7a5010;border:1px solid #e8c068}
+
+.day-tip{border-left:2px solid var(--gold);padding:8px 13px;margin-bottom:8px;font-size:12.5px;color:var(--slate);background:rgba(200,146,42,.05);border-radius:0 3px 3px 0;line-height:1.6}
+.day-warn{border-left:2px solid var(--rust);padding:8px 13px;margin-bottom:8px;font-size:12.5px;color:#7a3a12;background:rgba(192,90,42,.06);border-radius:0 3px 3px 0;line-height:1.6}
+
+/* ROUTE STRIP */
+.day-route{
+  border-top:1px solid var(--border);padding:10px 1.75rem;
+  background:rgba(247,242,234,.6);
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.dr-icon{font-size:14px;flex-shrink:0}
+.dr-text{font-size:12.5px;color:var(--slate);flex:1;min-width:100px}
+.dr-links{display:flex;gap:6px;flex-shrink:0}
+
+.rlink{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 13px;border:1px solid var(--border);border-radius:2px;
+  font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--teal);text-decoration:none;transition:all .15s;white-space:nowrap;background:#fff;
+}
+.rlink:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
+.rlink.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+.rlink.primary:hover{background:var(--teal-mid);border-color:var(--teal-mid)}
+
+/* HOTEL STRIP */
+.day-hotel{
+  border-top:1px solid var(--border);padding:12px 1.75rem;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
   background:#fff;
 }
-.day-row:hover{transform:translateX(4px);box-shadow:inset 3px 0 0 var(--gold)}
-.day-num{
-  background:var(--ink);
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  gap:2px;padding:1.5rem .5rem;
+.dh-label{
+  font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--muted);flex-shrink:0;
+  display:flex;align-items:center;gap:6px;
 }
-.day-num-n{
-  font-family:'Playfair Display',serif;
-  font-size:2.5rem;font-weight:900;
-  color:var(--gold-light);line-height:1;
-}
-.day-num-l{
-  font-family:'DM Mono',monospace;
-  font-size:9px;letter-spacing:2px;
-  color:rgba(245,240,232,0.4);text-transform:uppercase;
-}
-.day-body{padding:1.5rem 1.75rem}
-.day-name{
-  font-family:'Playfair Display',serif;
-  font-size:1.25rem;font-weight:700;
-  color:var(--ink);margin-bottom:2px;
-}
-.day-date{
-  font-family:'DM Mono',monospace;font-size:10px;
-  letter-spacing:1.5px;color:var(--muted);
-  text-transform:uppercase;margin-bottom:1rem;
-}
-.day-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
-.slot{background:var(--cream);padding:10px 12px;border-radius:2px}
-.slot-time{
-  font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:1.5px;color:var(--gold);
-  text-transform:uppercase;margin-bottom:5px;
-}
-.slot-text{font-size:12.5px;color:var(--slate);line-height:1.5}
-.day-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
-.dtag{
-  padding:3px 10px;border-radius:1px;
-  font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:1px;text-transform:uppercase;font-weight:500;
-}
-.dtag-trek{background:#e8f3e0;color:#2d6b11}
-.dtag-beach{background:#dff0ef;color:#0f6e5a}
-.dtag-city{background:#e8e4f8;color:#3c2d89}
-.dtag-drive{background:#f5ede0;color:#7a3a12}
-.dtag-log{background:#f0ece0;color:#5a4a20}
-.dtag-special{background:#fef3d8;color:#7a5010;border:1px solid #e8c068}
-.day-tip{
-  border-left:2px solid var(--gold);
-  padding:8px 12px;
-  font-size:12.5px;
-  color:var(--slate);
-  background:rgba(200,146,42,0.05);
-  line-height:1.6;
-  border-radius:0 2px 2px 0;
-}
-.day-warn{
-  border-left:2px solid var(--rust);
-  padding:8px 12px;
-  font-size:12.5px;
-  color:#7a3a12;
-  background:rgba(192,90,42,0.06);
-  line-height:1.6;
-  border-radius:0 2px 2px 0;
-}
-/* BOVILLA SPECIAL */
-.bovilla-badge{
+.dh-label::before{content:'🏨';font-size:12px}
+.hotel-opts{display:flex;gap:7px;flex-wrap:wrap}
+
+.hopt{
   display:inline-flex;align-items:center;gap:6px;
-  background:linear-gradient(135deg,#1a7a6e,#2da898);
-  color:#fff;padding:3px 10px;border-radius:1px;
+  text-decoration:none;padding:6px 13px;border-radius:2px;
+  font-size:12px;font-weight:500;transition:all .15s;
+  white-space:nowrap;border:1px solid;
+}
+.hopt.bk{background:rgba(0,59,149,.06);border-color:rgba(0,59,149,.25);color:var(--booking)}
+.hopt.bk:hover{background:var(--booking);color:#fff;border-color:var(--booking)}
+.hopt.ab{background:rgba(255,56,92,.07);border-color:rgba(255,56,92,.3);color:var(--airbnb)}
+.hopt.ab:hover{background:var(--airbnb);color:#fff;border-color:var(--airbnb)}
+.hopt-tag{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;opacity:.6}
+.undecided{
   font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;
-  margin-bottom:6px;
+  color:var(--gold);padding:4px 9px;
+  border:1px dashed rgba(200,146,42,.4);border-radius:2px;
 }
 
-/* ── FLIGHTS ── */
-.flights-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
-.flight-card{
-  background:#fff;border:1px solid var(--border);
-  border-radius:3px;padding:1.75rem;
-  position:relative;overflow:hidden;
+/* ── ALOJAMIENTO ── */
+.hotel-nights{display:flex;flex-direction:column;gap:1.5rem}
+.hn{background:#fff;border:1px solid var(--border);border-radius:5px;overflow:hidden}
+.hn-head{background:var(--ink);padding:1rem 1.5rem;display:flex;align-items:center;gap:16px}
+.hn-day{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--gold-light);line-height:1;flex-shrink:0;min-width:2rem;text-align:center}
+.hn-info{}
+.hn-name{font-family:'Playfair Display',serif;font-size:1rem;color:#f7f2ea;font-weight:700}
+.hn-date{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:1.5px;color:rgba(247,242,234,.38);text-transform:uppercase;margin-top:2px}
+.hn-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:1.25rem 1.5rem}
+.hc{
+  border:1px solid var(--border);border-radius:3px;
+  padding:1rem 1.15rem;transition:all .2s;text-decoration:none;display:block;
 }
-.flight-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:var(--teal);
-}
+.hc.bk-card{border-color:rgba(0,59,149,.2);background:rgba(0,59,149,.025)}
+.hc.bk-card:hover{border-color:var(--booking);box-shadow:0 4px 18px rgba(0,59,149,.12);transform:translateY(-2px)}
+.hc.ab-card{border-color:rgba(255,56,92,.2);background:rgba(255,56,92,.025)}
+.hc.ab-card:hover{border-color:var(--airbnb);box-shadow:0 4px 18px rgba(255,56,92,.12);transform:translateY(-2px)}
+.hc-platform{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:5px}
+.bk-card .hc-platform{color:var(--booking);opacity:.75}
+.ab-card .hc-platform{color:var(--airbnb);opacity:.75}
+.hc-name{font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:4px;line-height:1.4}
+.hc-loc{font-size:11.5px;color:var(--muted)}
+.hc-cta{margin-top:10px;display:inline-flex;align-items:center;gap:4px;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:1px;text-transform:uppercase}
+.bk-card .hc-cta{color:var(--booking)}
+.ab-card .hc-cta{color:var(--airbnb)}
+.hn-footer{padding:9px 1.5rem;border-top:1px solid var(--border);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase}
+.hn-footer.undecided-footer{color:var(--gold);background:rgba(200,146,42,.04)}
+.hn-footer.confirmed-footer{color:var(--teal);background:rgba(26,122,110,.04)}
+
+/* ── VUELOS ── */
+.flights-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem}
+.flight-card{background:#fff;border:1px solid var(--border);border-radius:5px;padding:1.75rem;position:relative;overflow:hidden}
+.flight-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--teal)}
 .flight-card.return::before{background:var(--gold)}
-.flight-airline{
-  font-family:'DM Mono',monospace;font-size:10px;
-  letter-spacing:2px;text-transform:uppercase;
-  color:var(--muted);margin-bottom:1rem;
-  display:flex;align-items:center;gap:8px;
-}
-.flight-arrow{color:var(--muted);font-size:11px}
-.f-row{display:flex;align-items:center;gap:1.5rem;margin-bottom:.75rem}
-.f-apt{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--ink);line-height:1}
-.f-time{font-size:12px;color:var(--muted);margin-top:2px}
+.flight-airline{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:1.1rem}
+.f-row{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.f-apt{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--ink);line-height:1}
+.f-time{font-size:12px;color:var(--muted);margin-top:3px}
 .f-sep{flex:1;display:flex;align-items:center;gap:8px}
 .f-line{flex:1;height:1px;background:var(--border)}
-.f-plane{font-size:16px;color:var(--teal)}
-.f-price{
-  font-family:'Playfair Display',serif;
-  font-size:1.4rem;font-weight:700;
-  color:var(--teal);
-}
+.f-price{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--teal)}
 .f-note{font-size:12px;color:var(--muted);margin-top:2px}
-.confirmed-badge{
-  display:inline-flex;align-items:center;gap:5px;
-  background:#e8f3e0;color:#2d6b11;
-  padding:3px 10px;border-radius:1px;
-  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;
-  margin-top:8px;
-}
-.confirmed-badge::before{content:'✓';font-size:10px}
-.car-card{
-  background:var(--ink);border-radius:3px;
-  padding:2rem 2.5rem;
-  display:grid;grid-template-columns:1fr auto;
-  align-items:center;gap:2rem;
-}
-.car-info h3{
-  font-family:'Playfair Display',serif;
-  font-size:1.4rem;color:#f5f0e8;
-  margin-bottom:.5rem;
-}
-.car-info p{font-size:13px;color:rgba(245,240,232,0.5);line-height:1.7}
-.car-stats{display:flex;gap:2rem}
-.car-stat{text-align:right}
-.car-stat-val{
-  font-family:'Playfair Display',serif;
-  font-size:1.75rem;font-weight:700;
-  color:var(--gold-light);display:block;line-height:1;
-}
-.car-stat-lbl{
-  font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:1.5px;text-transform:uppercase;
-  color:rgba(245,240,232,0.35);margin-top:3px;display:block;
-}
+.ok-badge{display:inline-flex;align-items:center;gap:5px;background:#e4f2da;color:#2a6010;padding:3px 10px;border-radius:2px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;margin-top:10px}
+.ok-badge::before{content:'✓';font-size:11px}
 
-/* ── ROUTES ── */
-.routes-list{display:flex;flex-direction:column;gap:10px}
+.car-card{background:var(--ink);border-radius:5px;padding:2rem 2.5rem;display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem}
+.car-info h3{font-family:'Playfair Display',serif;font-size:1.35rem;color:#f7f2ea;margin-bottom:.6rem}
+.car-info p{font-size:13px;color:rgba(247,242,234,.5);line-height:1.75}
+.car-stats{display:flex;gap:2.5rem}
+.car-stat{text-align:right}
+.csv{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:700;color:var(--gold-light);display:block;line-height:1}
+.csl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(247,242,234,.3);margin-top:4px;display:block}
+
+/* ── RUTAS ── */
+.routes-list{display:flex;flex-direction:column;gap:8px}
 .route-item{
-  display:grid;grid-template-columns:auto 1fr auto;
-  align-items:center;gap:1.5rem;
-  background:#fff;border:1px solid var(--border);
-  border-radius:3px;padding:1.25rem 1.5rem;
+  background:#fff;border:1px solid var(--border);border-radius:4px;padding:1.25rem 1.5rem;
+  display:grid;grid-template-columns:50px 1fr auto;align-items:center;gap:1.25rem;
   transition:border-color .2s;
 }
 .route-item:hover{border-color:var(--teal)}
-.route-day-badge{
-  background:var(--ink);color:var(--gold-light);
-  width:40px;height:40px;border-radius:2px;
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;
-  flex-shrink:0;
-}
-.route-body{}
-.route-name{font-weight:500;font-size:14px;color:var(--ink);margin-bottom:3px}
-.route-detail{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--muted)}
-.route-links{display:flex;gap:6px}
-.rlink{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:6px 12px;
-  border:1px solid var(--border);border-radius:1px;
-  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;
-  color:var(--teal);text-decoration:none;
-  transition:all .15s;white-space:nowrap;
-}
-.rlink:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
-.route-special{border-left:3px solid var(--teal-light)}
+.route-item.special{border-left:3px solid var(--teal-light)}
+.rb{background:var(--ink);color:var(--gold-light);width:50px;height:50px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;flex-shrink:0}
+.rn{font-weight:500;font-size:14px;color:var(--ink);margin-bottom:4px}
+.rd{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--muted)}
+.rl{display:flex;gap:6px;flex-shrink:0}
 
-/* ── BUDGET ── */
+/* ── PRESUPUESTO ── */
+.budget-banner{
+  background:linear-gradient(135deg,var(--teal) 0%,var(--teal-mid) 100%);
+  border-radius:5px;padding:1.5rem 2rem;margin-bottom:1.75rem;
+  display:flex;align-items:center;gap:2rem;
+}
+.bb-val{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:#fff;white-space:nowrap;line-height:1}
+.bb-info{flex:1}
+.bb-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:4px}
+.bb-items{font-size:13px;color:rgba(255,255,255,.82);line-height:1.7}
+
 .budget-layout{display:grid;grid-template-columns:1fr 360px;gap:2rem;align-items:start}
-.budget-table{background:#fff;border:1px solid var(--border);border-radius:3px;overflow:hidden}
-.bt-head{
-  background:var(--ink);padding:1rem 1.5rem;
-  display:grid;grid-template-columns:1fr auto;
-}
-.bt-head-l,.bt-head-r{
-  font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:2px;text-transform:uppercase;
-  color:rgba(245,240,232,0.4);
-}
-.bt-row{
-  display:grid;grid-template-columns:1fr auto;
-  padding:12px 1.5rem;
-  border-bottom:1px solid var(--border);
-  align-items:start;
-}
+.budget-table{background:#fff;border:1px solid var(--border);border-radius:5px;overflow:hidden}
+.bt-head{background:var(--ink);padding:1rem 1.5rem;display:grid;grid-template-columns:1fr auto}
+.bt-hl,.bt-hr{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(247,242,234,.35)}
+.bt-hr{text-align:right}
+.bt-row{display:grid;grid-template-columns:1fr auto;padding:11px 1.5rem;border-bottom:1px solid var(--border);align-items:center}
 .bt-row:last-child{border:none}
-.bt-row.confirmed .bt-right{color:var(--teal)}
-.bt-row.total{
-  background:var(--cream);
-  padding:16px 1.5rem;
-  border-top:2px solid var(--border);
-}
-.bt-left{font-size:13.5px;color:var(--ink)}
-.bt-left small{display:block;font-size:11px;color:var(--muted);margin-top:2px}
-.bt-right{
-  font-family:'Playfair Display',serif;
-  font-size:1.1rem;font-weight:700;
-  color:var(--ink);white-space:nowrap;
-}
-.bt-row.total .bt-left{font-weight:500;font-size:14px}
-.bt-row.total .bt-right{font-size:1.5rem;color:var(--teal)}
-.budget-sidebar{display:flex;flex-direction:column;gap:1.25rem}
-.bs-card{
-  background:#fff;border:1px solid var(--border);
-  border-radius:3px;padding:1.5rem;
-}
-.bs-card-title{
-  font-family:'DM Mono',monospace;font-size:10px;
-  letter-spacing:2px;text-transform:uppercase;
-  color:var(--gold);margin-bottom:1rem;
-  display:flex;align-items:center;gap:8px;
-}
-.bs-card-title::after{content:'';flex:1;height:1px;background:var(--border)}
-.big-stat{
-  text-align:center;padding:1rem 0;
-}
-.big-stat-val{
-  font-family:'Playfair Display',serif;
-  font-size:3.5rem;font-weight:900;
-  color:var(--teal);line-height:1;display:block;
-}
-.big-stat-lbl{font-size:12px;color:var(--muted);margin-top:4px}
-.range-bar{
-  display:flex;align-items:center;gap:8px;
-  margin-top:1rem;font-size:11px;color:var(--muted);
-  font-family:'DM Mono',monospace;letter-spacing:.5px;
-}
-.rb-track{flex:1;height:4px;background:var(--cream);border-radius:2px;overflow:hidden}
-.rb-fill{height:100%;width:60%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:2px}
-.paid-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid var(--border)}
-.paid-row:last-child{border:none;padding-top:10px;font-weight:500}
-.paid-check{color:var(--teal)}
+.bt-row.ok .bt-amt{color:var(--teal)}
+.bt-row.est .bt-amt{color:var(--muted)}
+.bt-row.total{background:var(--cream);padding:16px 1.5rem;border-top:2px solid var(--border)}
+.bt-lbl{font-size:13.5px;color:var(--ink)}
+.bt-lbl small{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.bt-amt{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ink);white-space:nowrap}
+.bt-row.total .bt-amt{font-size:1.5rem;color:var(--teal)}
 
-/* ── INFO ── */
-.info-masonry{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
-.info-block{background:#fff;border:1px solid var(--border);border-radius:3px;overflow:hidden}
+.budget-sidebar{display:flex;flex-direction:column;gap:1.25rem}
+.bs-card{background:#fff;border:1px solid var(--border);border-radius:5px;padding:1.5rem}
+.bs-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.bs-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.big-n{font-family:'Playfair Display',serif;font-size:3.25rem;font-weight:900;color:var(--teal);line-height:1;display:block;text-align:center;padding:.75rem 0}
+.big-n-lbl{text-align:center;font-size:12px;color:var(--muted)}
+.range-bar{display:flex;align-items:center;gap:8px;margin-top:1rem;font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
+.rb-track{flex:1;height:4px;background:var(--cream);border-radius:2px;overflow:hidden}
+.rb-fill{height:100%;width:42%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:2px}
+.paid-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
+.paid-row:last-child{border:none;padding-top:10px;font-weight:500}
+.pc{color:var(--teal);font-family:'DM Mono',monospace;font-size:12.5px}
+
+/* TIPS money */
+.money-tips{display:flex;flex-direction:column;gap:0}
+.mt-item{display:flex;align-items:baseline;gap:9px;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px}
+.mt-item:last-child{border:none}
+.mt-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:5px}
+.mt-text{color:var(--slate);line-height:1.5}
+
+/* ── GUÍA ── */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.info-block{background:#fff;border:1px solid var(--border);border-radius:5px;overflow:hidden}
 .ib-head{background:var(--ink);padding:12px 1.25rem}
-.ib-title{
-  font-family:'Playfair Display',serif;
-  font-size:1rem;font-weight:700;
-  color:var(--gold-light);
-}
+.ib-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--gold-light)}
 .ib-body{padding:1.25rem}
-.ib-item{
-  display:flex;align-items:baseline;gap:8px;
-  padding:6px 0;border-bottom:1px solid var(--border);
-  font-size:13px;
-}
+.ib-item{display:flex;align-items:baseline;gap:9px;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px}
 .ib-item:last-child{border:none}
-.ib-dot{
-  width:5px;height:5px;border-radius:50%;
-  background:var(--gold);flex-shrink:0;
-  margin-top:5px;
-}
+.ib-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:5px}
 .ib-text{color:var(--slate);line-height:1.5}
 .food-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.food-item{
-  background:var(--cream);padding:10px 12px;border-radius:2px;
-}
+.food-item{background:var(--cream);padding:10px 12px;border-radius:3px}
 .food-name{font-weight:500;font-size:13px;color:var(--ink);margin-bottom:2px}
 .food-desc{font-size:11px;color:var(--muted)}
-.photo-list{display:flex;flex-direction:column;gap:0}
-.photo-item{
-  display:flex;align-items:center;gap:12px;
-  padding:9px 0;border-bottom:1px solid var(--border);
-  font-size:13px;
-}
+.photo-list{display:flex;flex-direction:column}
+.photo-item{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
 .photo-item:last-child{border:none}
-.photo-num{
-  font-family:'Playfair Display',serif;
-  font-size:1.4rem;font-weight:900;
-  color:var(--cream);line-height:1;
-  width:32px;flex-shrink:0;text-align:center;
-  text-shadow:0 0 0 transparent;
-  color:var(--gold-light);
-  opacity:.4;
-}
-.photo-text{color:var(--slate)}
-.dict-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.dict-item{
-  display:flex;flex-direction:column;gap:2px;
-  padding:8px 0;border-bottom:1px solid var(--border);
-}
+.photo-n{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:900;color:var(--gold-light);opacity:.42;width:30px;flex-shrink:0;text-align:center}
+.photo-t{color:var(--slate)}
+.dict-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.dict-item{padding:7px 0;border-bottom:1px solid var(--border)}
 .dict-item:nth-last-child(-n+2){border:none}
 .dict-al{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--ink);font-weight:700}
-.dict-es{font-size:12px;color:var(--muted)}
+.dict-es{font-size:11.5px;color:var(--muted)}
 
-/* ── BOVILLA HIGHLIGHT ── */
-.bovilla-section{
-  background:linear-gradient(135deg,#0f2a26 0%,#1a4a40 50%,#0f2a26 100%);
-  border-radius:3px;
-  padding:2.5rem;
-  margin:2rem 0;
-  position:relative;overflow:hidden;
-  border:1px solid rgba(45,168,152,0.3);
+/* ── BOVILLA ── */
+.bovilla-box{
+  background:linear-gradient(135deg,#0e2a24 0%,#1a4a3e 50%,#0e2a24 100%);
+  border-radius:5px;padding:2.5rem;margin:2rem 0;
+  position:relative;overflow:hidden;border:1px solid rgba(45,184,168,.25);
 }
-.bovilla-section::before{
-  content:'';position:absolute;
-  top:-40%;right:-10%;
-  width:400px;height:400px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(45,168,152,0.15) 0%,transparent 70%);
+.bovilla-box::before{
+  content:'';position:absolute;top:-30%;right:-5%;
+  width:350px;height:350px;border-radius:50%;
+  background:radial-gradient(circle,rgba(45,184,168,.15) 0%,transparent 70%);
 }
 .bovilla-label{
-  font-family:'DM Mono',monospace;font-size:10px;
-  letter-spacing:3px;text-transform:uppercase;
-  color:var(--teal-light);
-  display:flex;align-items:center;gap:10px;
-  margin-bottom:1rem;
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--teal-light);display:flex;align-items:center;gap:10px;margin-bottom:.75rem;
 }
-.bovilla-label::after{content:'';flex:1;height:1px;background:rgba(45,168,152,0.3)}
-.bovilla-title{
-  font-family:'Playfair Display',serif;
-  font-size:2rem;font-weight:700;
-  color:#f5f0e8;margin-bottom:.5rem;
-}
+.bovilla-label::after{content:'';flex:1;height:1px;background:rgba(45,184,168,.25)}
+.bovilla-title{font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:700;color:#f7f2ea;margin-bottom:1.5rem}
 .bovilla-title em{font-style:italic;color:var(--gold-light)}
-.bovilla-body{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:2rem;margin-top:1.5rem;
-  position:relative;
-}
-.bovilla-fact{
-  display:flex;gap:12px;align-items:flex-start;
-  padding:10px 0;border-bottom:1px solid rgba(245,240,232,0.08);
-}
-.bovilla-fact:last-child{border:none}
-.bf-dot{width:6px;height:6px;background:var(--teal-light);border-radius:50%;flex-shrink:0;margin-top:6px}
-.bf-text{font-size:13px;color:rgba(245,240,232,0.7);line-height:1.6}
-.bf-text strong{color:#f5f0e8;font-weight:500}
-.bovilla-why{
-  background:rgba(45,168,152,0.1);
-  border:1px solid rgba(45,168,152,0.25);
-  border-radius:2px;padding:1.25rem;
-  font-size:13px;color:rgba(245,240,232,0.75);
-  line-height:1.7;
-}
-.bovilla-why strong{color:var(--gold-light)}
+.bovilla-body{display:grid;grid-template-columns:1fr 1fr;gap:2rem;position:relative}
+.bov-fact{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.bov-fact:last-child{border:none}
+.bov-dot{width:5px;height:5px;background:var(--teal-light);border-radius:50%;flex-shrink:0;margin-top:7px}
+.bov-text{font-size:13px;color:rgba(247,242,234,.72);line-height:1.6}
+.bov-text strong{color:#f7f2ea;font-weight:500}
+.bov-strat{background:rgba(45,184,168,.1);border:1px solid rgba(45,184,168,.2);border-radius:3px;padding:1.25rem;font-size:12.5px;color:rgba(247,242,234,.75);line-height:1.8}
+.bov-strat strong{color:var(--gold-light)}
 
 /* ── RESPONSIVE ── */
-@media(max-width:700px){
+@media(max-width:800px){
+  .flights-grid,.budget-layout,.info-grid,.bovilla-body{grid-template-columns:1fr}
   .day-slots{grid-template-columns:1fr}
-  .flights-grid{grid-template-columns:1fr}
-  .budget-layout{grid-template-columns:1fr}
-  .info-masonry{grid-template-columns:1fr}
-  .bovilla-body{grid-template-columns:1fr}
+  .hn-cards{grid-template-columns:1fr}
   .car-card{grid-template-columns:1fr}
   .car-stats{justify-content:flex-start}
-  .cover-title{font-size:3.5rem;letter-spacing:-1px}
-  .route-item{grid-template-columns:auto 1fr;grid-template-rows:auto auto}
-  .route-links{grid-column:1/-1}
-  .dict-grid,.food-grid{grid-template-columns:1fr}
+  .cover-title{font-size:4rem;letter-spacing:-1.5px}
+  .route-item{grid-template-columns:50px 1fr;grid-template-rows:auto auto}
+  .rl{grid-column:1/-1}
 }
-@media(max-width:480px){
-  .cover-stats{flex-wrap:wrap}
-  .sticky-nav{overflow-x:auto;padding:0 3%}
-  .section{padding:6% 4% 8%}
+@media(max-width:520px){
+  .section{padding:8% 5% 10%}
+  .cover{padding:3.5rem 5%}
+  .sticky-nav{flex-wrap:wrap}
+  .cover-meta{flex-wrap:wrap}
 }
 </style>
 </head>
 <body>
 
-<!-- COVER -->
+<!-- ═══════════ COVER ═══════════ -->
 <div class="cover">
   <div class="cover-bg"></div>
   <div class="cover-grid"></div>
-  <div class="cover-noise"></div>
+  <svg class="cover-mountains" viewBox="0 0 1440 280" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 280 L0 200 L90 155 L180 190 L260 120 L340 160 L420 85 L500 130 L580 60 L660 110 L720 45 L780 95 L860 70 L940 120 L1010 50 L1080 100 L1150 75 L1220 130 L1300 90 L1380 150 L1440 120 L1440 280 Z" fill="rgba(26,122,110,0.18)"/>
+    <path d="M0 280 L0 230 L80 195 L160 215 L240 170 L310 200 L380 145 L450 175 L520 120 L590 155 L660 100 L730 140 L800 110 L870 150 L940 115 L1010 160 L1080 130 L1160 175 L1250 145 L1340 190 L1440 155 L1440 280 Z" fill="rgba(10,26,20,0.85)"/>
+    <path d="M0 280 L0 255 L120 235 L240 250 L360 230 L480 245 L600 225 L720 240 L840 222 L960 238 L1080 220 L1200 235 L1320 225 L1440 240 L1440 280 Z" fill="rgba(9,22,18,0.95)"/>
+  </svg>
   <div class="cover-content">
-    <div class="cover-eyebrow">Viaje de aventura</div>
-    <h1 class="cover-title">Al<em>ba</em>nia<br>2026</h1>
-    <p class="cover-sub">Mike & Lucía · De los Alpes albaneses a la Riviera del Jónico. Siete días para descubrir el país más salvaje de Europa.</p>
-    <div class="cover-stats">
-      <div class="cover-stat"><span class="cs-val">7</span><span class="cs-lbl">Días</span></div>
-      <div class="cover-stat"><span class="cs-val">28 May</span><span class="cs-lbl">Salida</span></div>
-      <div class="cover-stat"><span class="cs-val">6 Noches</span><span class="cs-lbl">Alojamiento</span></div>
-      <div class="cover-stat"><span class="cs-val">~1.300€</span><span class="cs-lbl">Presupuesto</span></div>
+    <div class="cover-eyebrow">Viaje de aventura · Mayo–Junio 2026</div>
+    <h1 class="cover-title">Al<em>ba</em>nia</h1>
+    <div class="cover-meta">
+      <div class="cmi"><span class="cmi-val">7 días</span><span class="cmi-lbl">Duración</span></div>
+      <div class="cmi"><span class="cmi-val">28 May</span><span class="cmi-lbl">Salida MAD</span></div>
+      <div class="cmi"><span class="cmi-val">4 Jun</span><span class="cmi-lbl">Regreso</span></div>
+      <div class="cmi"><span class="cmi-val">2 pax</span><span class="cmi-lbl">Viajeros</span></div>
+      <div class="cmi"><span class="cmi-val">~1.300€</span><span class="cmi-lbl">Presupuesto</span></div>
     </div>
-    <div class="cover-scroll"><div class="scroll-line"></div> Desplazar para explorar</div>
+    <div class="cover-tags">
+      <span class="ctag hi">🏔 Alpes Albaneses</span>
+      <span class="ctag hi">⛵ Ferry Lago Koman</span>
+      <span class="ctag">Shkodër · Theth · Valbona · Berat · Riviera</span>
+    </div>
   </div>
 </div>
 
-<!-- NAV -->
+<!-- ═══════════ NAV ═══════════ -->
 <nav class="sticky-nav">
   <span class="nav-brand">ALB '26</span>
-  <button class="nav-tab active" onclick="show('itinerario',this)">Itinerario</button>
-  <button class="nav-tab" onclick="show('vuelos',this)">Vuelos & Coche</button>
-  <button class="nav-tab" onclick="show('rutas',this)">Rutas</button>
-  <button class="nav-tab" onclick="show('presupuesto',this)">Presupuesto</button>
-  <button class="nav-tab" onclick="show('info',this)">Guía</button>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="show('itinerario',this)">Itinerario</button>
+    <button class="nav-tab" onclick="show('alojamiento',this)">Alojamiento</button>
+    <button class="nav-tab" onclick="show('vuelos',this)">Vuelos & Coche</button>
+    <button class="nav-tab" onclick="show('rutas',this)">Rutas & Mapas</button>
+    <button class="nav-tab" onclick="show('presupuesto',this)">Presupuesto</button>
+    <button class="nav-tab" onclick="show('info',this)">Guía</button>
+  </div>
 </nav>
 
-<!-- ITINERARIO -->
+<!-- ═══════════ ITINERARIO ═══════════ -->
 <div id="itinerario" class="section active">
-  <div class="section-header">
-    <div class="section-label">28 mayo — 4 junio</div>
-    <h2 class="section-title">El <em>itinerario</em></h2>
-  </div>
+  <div class="sec-eyebrow">28 mayo — 4 junio · 7 días</div>
+  <h2 class="sec-title">El <em>itinerario</em></h2>
 
-  <div class="days-grid">
+  <div class="days-stack">
 
     <!-- DÍA 1 -->
-    <div class="day-row">
-      <div class="day-num"><div class="day-num-n">1</div><div class="day-num-l">DÍA</div></div>
-      <div class="day-body">
-        <div class="day-name">Aterrizaje → Shkodër</div>
-        <div class="day-date">Jue 28 mayo noche · Vie 29 mayo</div>
-        <div class="day-slots">
-          <div class="slot"><div class="slot-time">Madrugada</div><div class="slot-text">Llegada 01:50. Coche → Shkodër (1h). Check-in 24h en el alojamiento.</div></div>
-          <div class="slot"><div class="slot-time">Tarde 16:00–19:00</div><div class="slot-text">Castillo de Rozafa al atardecer. Paseo peatonal Rruga Kolë Idromeno.</div></div>
-          <div class="slot"><div class="slot-time">Noche</div><div class="slot-text">Cena en Tradita o Mesnata. Sacar efectivo LEK (Credins Bank o OTP).</div></div>
+    <div class="day-card type-log">
+      <div class="day-top">
+        <div class="day-num"><div class="day-num-n">1</div><div class="day-num-l">DÍA</div></div>
+        <div class="day-body">
+          <div class="day-name">Aterrizaje → Shkodër</div>
+          <div class="day-date">Jue 28 mayo (noche) · Vie 29 mayo</div>
+          <div class="day-slots">
+            <div class="slot"><div class="slot-time">Madrugada 01:50</div><div class="slot-text">Llegada TIA. Check-in 24h. Coche → Shkodër (1h por SH1). Dormir hasta tarde.</div></div>
+            <div class="slot"><div class="slot-time">Tarde 16:00–19:00</div><div class="slot-text">Castillo de Rozafa al atardecer. Paseo peatonal Rruga Kolë Idromeno. Vista panorámica.</div></div>
+            <div class="slot"><div class="slot-time">Noche</div><div class="slot-text">Cena en Tradita o Mesnata. Sacar efectivo LEK (Credins Bank o OTP). Preparar mochila montaña.</div></div>
+          </div>
+          <div class="day-tags"><span class="dtag dtag-city">Ciudad</span><span class="dtag dtag-log">Logística</span></div>
+          <div class="day-tip">Gestionar parking del coche con el host (2–5€/día). Dejar maletas grandes en el maletero, llevar solo lo necesario para la montaña.</div>
         </div>
-        <div class="day-tags"><span class="dtag dtag-city">Ciudad</span><span class="dtag dtag-log">Logística</span></div>
-        <div class="day-tip">Dormir hasta tarde para recuperar horas. Gestionar parking del coche con el host (2–5€/día). Dejar maletas grandes en el maletero, preparar mochila de montaña.</div>
+      </div>
+      <div class="day-route">
+        <span class="dr-icon">🗺️</span>
+        <span class="dr-text"><strong>Ruta del día:</strong> Aeropuerto TIA → Shkodër · ~1h · 100 km · Autovía SH1 norte · Sin tráfico de madrugada</span>
+        <div class="dr-links">
+          <a class="rlink primary" href="https://www.google.com/maps/dir/Mother+Teresa+Airport+Tirana+Albania/Shkoder+Albania" target="_blank">📍 Ver en Maps ↗</a>
+        </div>
+      </div>
+      <div class="day-hotel">
+        <span class="dh-label">Noche 29–30 mayo · Shkodër</span>
+        <div class="hotel-opts">
+          <a class="hopt bk" href="https://www.booking.com/Share-qut6O3" target="_blank"><span class="hopt-tag">booking ·</span> Amo's Hotel</a>
+          <a class="hopt bk" href="https://www.booking.com/Share-ZzIxx8" target="_blank"><span class="hopt-tag">booking ·</span> Kulla e Sadri Lukes</a>
+          <span class="undecided">⚡ Por elegir</span>
+        </div>
       </div>
     </div>
 
     <!-- DÍA 2 -->
-    <div class="day-row">
-      <div class="day-num"><div class="day-num-n">2</div><div class="day-num-l">DÍA</div></div>
-      <div class="day-body">
-        <div class="day-name">Shkodër → Theth</div>
-        <div class="day-date">Sábado 30 mayo</div>
-        <div class="day-slots">
-          <div class="slot"><div class="slot-time">Mañana 07:30</div><div class="slot-text">Furgon desde alojamiento. 1.200 LEK (~12€) por persona. 2.5–3h por el Paso Thore (1.600m).</div></div>
-          <div class="slot"><div class="slot-time">Tarde</div><div class="slot-text">Iglesia de Theth + Torre Kulla (historia del Kanun). Cascada de Grunas (45 min). Cañón adyacente.</div></div>
-          <div class="slot"><div class="slot-time">Noche</div><div class="slot-text">Cena en guesthouse (comida casera). Pedir picnic para mañana (5–7€). Preparar mochila: 2L agua mínimo.</div></div>
+    <div class="day-card type-trek">
+      <div class="day-top">
+        <div class="day-num"><div class="day-num-n">2</div><div class="day-num-l">DÍA</div></div>
+        <div class="day-body">
+          <div class="day-name">Shkodër → Theth</div>
+          <div class="day-date">Sábado 30 mayo</div>
+          <div class="day-slots">
+            <div class="slot"><div class="slot-time">Mañana 07:30</div><div class="slot-text">Furgon desde alojamiento → Theth. 1.200 LEK (~12€) por persona. 2.5–3h por el Paso Thore (1.600m).</div></div>
+            <div class="slot"><div class="slot-time">Tarde</div><div class="slot-text">Iglesia de Theth + Torre Kulla (historia del Kanun). Cascada de Grunas (45 min). Cañón adyacente.</div></div>
+            <div class="slot"><div class="slot-time">Noche</div><div class="slot-text">Cena en guesthouse (comida casera albanesa). Pedir picnic para mañana (5–7€). 2L agua mínimo.</div></div>
+          </div>
+          <div class="day-tags"><span class="dtag dtag-trek">Montaña</span><span class="dtag dtag-city">Cultura</span><span class="dtag dtag-log">Furgón</span></div>
+          <div class="day-tip">No hacer el Blue Eye hoy para conservar las piernas. Confirmar el furgon del Día 3 → Valbona con el host de la guesthouse.</div>
         </div>
-        <div class="day-tags"><span class="dtag dtag-trek">Montaña</span><span class="dtag dtag-city">Cultura</span></div>
-        <div class="day-tip">No hacer el Blue Eye hoy para conservar las piernas. Confirmar el furgon del Día 3 → Valbona con el host de la guesthouse.</div>
+      </div>
+      <div class="day-route">
+        <span class="dr-icon">🚌</span>
+        <span class="dr-text"><strong>Ruta del día:</strong> Shkodër → Theth en furgón compartido · 2.5–3h · Paso Thore (1.600m) · Paisaje espectacular</span>
+        <div class="dr-links">
+          <a class="rlink primary" href="https://www.google.com/maps/dir/Shkoder+Albania/Theth+Albania" target="_blank">📍 Ver en Maps ↗</a>
+        </div>
+      </div>
+      <div class="day-hotel">
+        <span class="dh-label">Noche 30–31 mayo · Theth</span>
+        <div class="hotel-opts">
+          <a class="hopt bk" href="https://www.booking.com/Share-qd8d228" target="_blank"><span class="hopt-tag">booking ·</span> Guesthouse Gjoni Theth</a>
+          <a class="hopt bk" href="https://www.booking.com/Share-OaMp0m" target="_blank"><span class="hopt-tag">booking ·</span> Bujtina Arlindi</a>
+          <span class="undecided">⚡ Por elegir</span>
+        </div>
       </div>
     </div>
 
     <!-- DÍA 3 -->
-    <div class="day-row">
-      <div class="day-num"><div class="day-num-n">3</div><div class="day-num-l">DÍA</div></div>
-      <div class="day-body">
-        <div class="day-name">Travesía Theth → Valbona</div>
-        <div class="day-date">Domingo 31 mayo · El día grande</div>
-        <div class="day-slots">
-          <div class="slot"><div class="slot-time">Mañana 07:30</div><div class="slot-text">Inicio trekking. Marcas roja/blanca en rocas. Café Simoni Kafe (último punto con agua potable antes del paso). Llenar botellas aquí.</div></div>
-          <div class="slot"><div class="slot-time">Mediodía</div><div class="slot-text">Valbona Pass (1.795m). Sendero secundario a la izquierda: 5 min extra al mirador sin árboles. Vistas tipo National Geographic.</div></div>
-          <div class="slot"><div class="slot-time">Tarde/Noche</div><div class="slot-text">Descenso técnico (pedrera + lecho de río seco). Llegada guesthouse Valbona. Cordero asado + Flija. Reservar furgon para Día 4.</div></div>
+    <div class="day-card type-trek">
+      <div class="day-top">
+        <div class="day-num"><div class="day-num-n">3</div><div class="day-num-l">DÍA</div></div>
+        <div class="day-body">
+          <div class="day-name">Travesía Theth → Valbona</div>
+          <div class="day-date">Domingo 31 mayo · ★ El día grande</div>
+          <div class="day-slots">
+            <div class="slot"><div class="slot-time">Mañana 07:30</div><div class="slot-text">Inicio trekking. Marcas roja/blanca en rocas. Café Simoni Kafe — último punto con agua potable. Llenar botellas.</div></div>
+            <div class="slot"><div class="slot-time">Mediodía</div><div class="slot-text">Valbona Pass (1.795m). Sendero secundario a la izquierda: 5 min al mirador sin árboles. Vistas tipo National Geographic.</div></div>
+            <div class="slot"><div class="slot-time">Tarde/Noche</div><div class="slot-text">Descenso técnico (pedrera + lecho de río). Llegada guesthouse Valbona. Cordero asado + Flija. Reservar furgon Día 4.</div></div>
+          </div>
+          <div class="day-tags"><span class="dtag dtag-trek">Trekking</span></div>
+          <div class="day-warn">⚠️ 17 km · +1.050m desnivel · 6.5–8h. Bastones muy recomendados para el descenso. El tramo final (lecho del río) es psicológicamente duro: queda más de lo que parece.</div>
         </div>
-        <div class="day-tags"><span class="dtag dtag-trek">Trekking</span></div>
-        <div class="day-warn">17 km · +1.050m desnivel · 6.5–8h. Bastones muy recomendados para el descenso. El tramo final (lecho del río) es psicológicamente duro: queda más de lo que parece.</div>
+      </div>
+      <div class="day-route">
+        <span class="dr-icon">🥾</span>
+        <span class="dr-text"><strong>Trekking:</strong> Theth → Valbona Pass (1.795m) → Valbona · 17 km · 6.5–8h · Descargar mapa offline antes de salir</span>
+        <div class="dr-links">
+          <a class="rlink primary" href="https://www.alltrails.com/trail/albania/diber/theth-valbona-pass" target="_blank">AllTrails ↗</a>
+          <a class="rlink" href="https://www.google.com/maps/dir/Theth+Albania/Valbona+Albania" target="_blank">Maps ↗</a>
+        </div>
+      </div>
+      <div class="day-hotel">
+        <span class="dh-label">Noche 31 mayo – 1 junio · Valbona</span>
+        <div class="hotel-opts">
+          <a class="hopt bk" href="https://www.booking.com/Share-Sg2wNo" target="_blank"><span class="hopt-tag">booking ·</span> Guesthouse Gezim Selimaj</a>
+          <a class="hopt bk" href="https://www.booking.com/Share-7Qn5OW" target="_blank"><span class="hopt-tag">booking ·</span> Guesthouse Emiljano</a>
+          <span class="undecided">⚡ Por elegir</span>
+        </div>
       </div>
     </div>
 
     <!-- DÍA 4 -->
-    <div class="day-row">
-      <div class="day-num"><div class="day-num-n">4</div><div class="day-num-l">DÍA</div></div>
-      <div class="day-body">
-        <div class="day-name">Ferry Lago Koman → Sur</div>
-        <div class="day-date">Lunes 1 junio</div>
-        <div class="day-slots">
-          <div class="slot"><div class="slot-time">Mañana 10:30</div><div class="slot-text">Furgon → Fierzë (embarcadero). 13:00 ferry Lago Koman. Ir en cubierta. 2.5–3h de "fiordo albanés".</div></div>
-          <div class="slot"><div class="slot-time">Tarde 16:00</div><div class="slot-text">Desembarque en Koman. Furgon → Shkodër. 18:00 recoger el coche. Inicio ruta hacia el sur.</div></div>
-          <div class="slot"><div class="slot-time">Noche</div><div class="slot-text">Opción B recomendada: Berat o Vlorë (3–3.5h). Más sensato que los 6h a Sarandë de noche.</div></div>
+    <div class="day-card type-ferry">
+      <div class="day-top">
+        <div class="day-num"><div class="day-num-n">4</div><div class="day-num-l">DÍA</div></div>
+        <div class="day-body">
+          <div class="day-name">Ferry Lago Koman → Berat</div>
+          <div class="day-date">Lunes 1 junio</div>
+          <div class="day-slots">
+            <div class="slot"><div class="slot-time">Mañana 10:30</div><div class="slot-text">Furgon → Fierzë (embarcadero). 13:00 ferry Lago Koman. Ir en cubierta superior. 2.5–3h de "fiordo albanés".</div></div>
+            <div class="slot"><div class="slot-time">Tarde 16:00</div><div class="slot-text">Desembarque en Koman. Furgon → Shkodër. 18:00 recoger el coche. Inicio ruta al sur hacia Berat (~3h).</div></div>
+            <div class="slot"><div class="slot-time">Noche ~21:00</div><div class="slot-text">Llegada a Berat. Check-in. Cena ligera. Casco histórico y castillo iluminado por la noche.</div></div>
+          </div>
+          <div class="day-tags"><span class="dtag dtag-ferry">Ferry</span><span class="dtag dtag-drive">Coche</span><span class="dtag dtag-log">Logística</span></div>
+          <div class="day-tip">El Lago Koman es uno de los trayectos en barco más espectaculares de Europa — cubierta superior obligatoria. Reservar ferry: komandoferry.com</div>
         </div>
-        <div class="day-tags"><span class="dtag dtag-log">Transporte</span><span class="dtag dtag-drive">Coche</span></div>
-        <div class="day-tip">El lago Koman es uno de los trayectos en barco más espectaculares de Europa. Cubierta superior es obligatoria.</div>
+      </div>
+      <div class="day-route">
+        <span class="dr-icon">⛵</span>
+        <span class="dr-text"><strong>Ruta del día:</strong> Valbona → Fierzë (furgón) → Ferry Koman (13:00) → Koman → Shkodër (recoger coche) → Berat · ~8h en total</span>
+        <div class="dr-links">
+          <a class="rlink primary" href="https://www.google.com/maps/dir/Valbona+Albania/Fierze+Albania/Shkoder+Albania/Berat+Albania" target="_blank">📍 Ruta completa ↗</a>
+          <a class="rlink" href="https://www.komandoferry.com" target="_blank">Ferry ↗</a>
+        </div>
+      </div>
+      <div class="day-hotel">
+        <span class="dh-label">Noche 1–2 junio · Berat</span>
+        <div class="hotel-opts">
+          <a class="hopt bk" href="https://www.booking.com/Share-UlOIb9" target="_blank"><span class="hopt-tag">booking ·</span> Villa Sophie Berat Castle</a>
+          <span class="undecided">⚡ Por elegir</span>
+        </div>
       </div>
     </div>
 
     <!-- DÍA 5 -->
-    <div class="day-row">
-      <div class="day-num"><div class="day-num-n">5</div><div class="day-num-l">DÍA</div></div>
-      <div class="day-body">
-        <div class="day-name">Ksamil y Sarandë</div>
-        <div class="day-date">Martes 2 junio</div>
-        <div class="day-slots">
-          <div class="slot"><div class="slot-time">Mañana 08:30</div><div class="slot-text">Ksamil temprano. Kayak o barca a las islas (10–15€). Único modo de tener el agua azul sin aglomeraciones.</div></div>
-          <div class="slot"><div class="slot-time">Mediodía</div><div class="slot-text">Comida en el Castillo de Lëkurësi. Vistas 360° de la bahía y Corfú en el horizonte.</div></div>
-          <div class="slot"><div class="slot-time">Tarde/Noche</div><div class="slot-text">Pulëbardha Beach o Mirror Beach para snorkel bajo acantilados. Cena en Sarandë: Saganaki + mejillones de Butrinto.</div></div>
+    <div class="day-card type-beach">
+      <div class="day-top">
+        <div class="day-num"><div class="day-num-n">5</div><div class="day-num-l">DÍA</div></div>
+        <div class="day-body">
+          <div class="day-name">Berat → Ksamil y Sarandë</div>
+          <div class="day-date">Martes 2 junio</div>
+          <div class="day-slots">
+            <div class="slot"><div class="slot-time">Mañana en Berat</div><div class="slot-text">Paseo por el casco histórico UNESCO. Barrio Mangalem, mezquita del Rey. Desayuno en el castillo.</div></div>
+            <div class="slot"><div class="slot-time">Mediodía</div><div class="slot-text">Salida hacia el sur (~2.5h). Llegada a Ksamil temprano. Kayak o barca a las islas (10–15€). Agua turquesa.</div></div>
+            <div class="slot"><div class="slot-time">Tarde/Noche</div><div class="slot-text">Castillo de Lëkurësi. Vistas 360° bahía + Corfú. Cena en Sarandë: Saganaki + mejillones de Butrinto.</div></div>
+          </div>
+          <div class="day-tags"><span class="dtag dtag-city">Berat UNESCO</span><span class="dtag dtag-beach">Playa</span><span class="dtag dtag-drive">Coche</span></div>
+          <div class="day-tip">Llegar a Ksamil antes de las 15:00 para tener agua sin aglomeraciones. No quedarse en la orilla principal: saturada de sombrillas.</div>
         </div>
-        <div class="day-tags"><span class="dtag dtag-beach">Playa</span><span class="dtag dtag-city">Gastronomía</span></div>
-        <div class="day-tip">Llegar a Ksamil antes de las 09:00 para aparcar. No quedarse en la orilla: la playa principal está saturada de sombrillas.</div>
+      </div>
+      <div class="day-route">
+        <span class="dr-icon">🚗</span>
+        <span class="dr-text"><strong>Ruta del día:</strong> Berat → Ksamil/Sarandë · ~2.5h · 160 km · Vía Fier y Vlorë · Paisaje costero en la última hora</span>
+        <div class="dr-links">
+          <a class="rlink primary" href="https://www.google.com/maps/dir/Berat+Albania/Ksamil+Albania" target="_blank">📍 Ver en Maps ↗</a>
+        </div>
+      </div>
+      <div class="day-hotel">
+        <span class="dh-label">Noche 2–3 junio · Ksamil / Sarandë · ✓ Pagado</span>
+        <div class="hotel-opts">
+          <a class="hopt ab" href="https://es-l.airbnb.com/rooms/1145577331018403572" target="_blank"><span class="hopt-tag">airbnb ·</span> Apartamento Sur — 164,53€ ✓</a>
+        </div>
       </div>
     </div>
 
     <!-- DÍA 6 -->
-    <div class="day-row">
-      <div class="day-num"><div class="day-num-n">6</div><div class="day-num-l">DÍA</div></div>
-      <div class="day-body">
-        <div class="day-name">Riviera Albanesa — Himarë</div>
-        <div class="day-date">Miércoles 3 junio</div>
-        <div class="day-slots">
-          <div class="slot"><div class="slot-time">Mañana</div><div class="slot-text">Ruta SH8 desde Sarandë. Parada en Castillo de Porto Palermo: fortaleza en península rodeada de mar cristalino.</div></div>
-          <div class="slot"><div class="slot-time">Mediodía</div><div class="slot-text">Himarë: pescado fresco a la brasa (precio por peso). Más encanto local que Sarandë.</div></div>
-          <div class="slot"><div class="slot-time">Tarde/Noche</div><div class="slot-text">Gjipe Beach (cañón, 20 min a pie) o Livadhi. Atardecer en Himarë Fshat. Cena de despedida. Souvenirs: aceite de oliva y miel de montaña.</div></div>
-        </div>
-        <div class="day-tags"><span class="dtag dtag-beach">Playa</span><span class="dtag dtag-drive">Conducción</span></div>
-        <div class="day-tip">Escarpines imprescindibles: playas de piedra gorda. Mide siempre en tiempo: en la Riviera, 20 km = 40 min de curvas.</div>
-      </div>
-    </div>
-
-    <!-- DÍA 7 CON BOVILLA -->
-    <div class="day-row">
-      <div class="day-num"><div class="day-num-n">7</div><div class="day-num-l">DÍA</div></div>
-      <div class="day-body">
-        <div class="day-name">Riviera → Bovilla Lake → Tirana → Vuelo</div>
-        <div class="day-date">Jueves 4 junio · Día de regreso</div>
-        <div class="day-slots">
-          <div class="slot"><div class="slot-time">Mañana 08:00</div><div class="slot-text">Salida obligatoria. Llogara Pass (últimas vistas de la costa). 3.5–4h hasta Tirana.</div></div>
-          <div class="slot">
-            <div class="slot-time">Mediodía 12:00–13:30</div>
-            <div class="bovilla-badge">★ Parada estrella</div>
-            <div class="slot-text">Lago Bovilla (30 min desde Tirana). Vistas espectaculares desde la presa. Ideal antes de entrar en la ciudad.</div>
+    <div class="day-card type-beach">
+      <div class="day-top">
+        <div class="day-num"><div class="day-num-n">6</div><div class="day-num-l">DÍA</div></div>
+        <div class="day-body">
+          <div class="day-name">Riviera Albanesa — Himarë</div>
+          <div class="day-date">Miércoles 3 junio</div>
+          <div class="day-slots">
+            <div class="slot"><div class="slot-time">Mañana</div><div class="slot-text">Ruta SH8 desde Sarandë. Parada en Castillo de Porto Palermo: fortaleza en península rodeada de mar cristalino.</div></div>
+            <div class="slot"><div class="slot-time">Mediodía</div><div class="slot-text">Himarë: pescado fresco a la brasa (precio por peso). Más encanto local que Sarandë.</div></div>
+            <div class="slot"><div class="slot-time">Tarde/Noche</div><div class="slot-text">Gjipe Beach (cañón, 20 min a pie) o Livadhi. Atardecer en Himarë Fshat. Cena de despedida. Souvenirs: aceite de oliva y miel de montaña.</div></div>
           </div>
-          <div class="slot"><div class="slot-time">Tarde 14:00–18:20</div><div class="slot-text">Tirana Express (1.5h): Plaza Skanderbeg, Pirámide, Pazari i Ri. 15:30 salir. 16:15 gasolinera Kastrati. 16:30 devolver coche. 18:20 vuelo.</div></div>
+          <div class="day-tags"><span class="dtag dtag-beach">Playa</span><span class="dtag dtag-drive">SH8 Costera</span></div>
+          <div class="day-tip">Escarpines imprescindibles: playas de piedra gorda. En la Riviera: 20 km = 40 min de curvas. Cuenta el tiempo, no la distancia.</div>
         </div>
-        <div class="day-tags">
-          <span class="dtag dtag-special">★ Bovilla Lake</span>
-          <span class="dtag dtag-city">Tirana</span>
-          <span class="dtag dtag-log">Aeropuerto</span>
+      </div>
+      <div class="day-route">
+        <span class="dr-icon">🌊</span>
+        <span class="dr-text"><strong>Ruta del día:</strong> Sarandë → Porto Palermo → Himarë (SH8) · ~1.5h · 50 km · La carretera más espectacular de Albania</span>
+        <div class="dr-links">
+          <a class="rlink primary" href="https://www.google.com/maps/dir/Sarande+Albania/Himara+Albania" target="_blank">📍 Ruta costera ↗</a>
         </div>
-        <div class="day-warn">Tráfico crítico: si el GPS marca rojo en Durrës, abortar Tirana y comer cerca del aeropuerto. Aspirar arena del coche antes de entregar. Check-in online hecho.</div>
+      </div>
+      <div class="day-hotel">
+        <span class="dh-label">Noche 3–4 junio · Himarë / Sarandë · ✓ Pagado (mismo Airbnb)</span>
+        <div class="hotel-opts">
+          <a class="hopt ab" href="https://es-l.airbnb.com/rooms/1145577331018403572" target="_blank"><span class="hopt-tag">airbnb ·</span> Apartamento Sur — 2ª noche incluida ✓</a>
+        </div>
       </div>
     </div>
 
-  </div>
+    <!-- DÍA 7 -->
+    <div class="day-card type-return">
+      <div class="day-top">
+        <div class="day-num"><div class="day-num-n">7</div><div class="day-num-l">DÍA</div></div>
+        <div class="day-body">
+          <div class="day-name">Lago Bovilla → Tirana → Vuelo</div>
+          <div class="day-date">Jueves 4 junio · Día de regreso</div>
+          <div class="day-slots">
+            <div class="slot"><div class="slot-time">Mañana 08:00</div><div class="slot-text">Salida obligatoria desde Himarë. Llogara Pass (últimas vistas de la costa). 3.5–4h hasta zona Tirana.</div></div>
+            <div class="slot">
+              <div class="slot-time">Mediodía 12:00–13:30 ★</div>
+              <div class="slot-text"><strong>Lago Bovilla</strong> (30 min desde Tirana). Embalse turquesa a 1.000m entre picos. Vistas espectaculares desde la presa. SH56.</div>
+            </div>
+            <div class="slot"><div class="slot-time">Tarde 14:00 → 18:20</div><div class="slot-text">Tirana Express: Plaza Skanderbeg, Pirámide, Pazari i Ri. 15:30 salir. 16:15 gasolinera Kastrati. 16:30 entregar coche. 18:20 ✈</div></div>
+          </div>
+          <div class="day-tags"><span class="dtag dtag-special">★ Lago Bovilla</span><span class="dtag dtag-city">Tirana</span><span class="dtag dtag-log">Aeropuerto</span></div>
+          <div class="day-warn">⚠️ Tráfico crítico: si el GPS marca rojo en Durrës, abortar Tirana y comer cerca del aeropuerto. Aspirar arena del coche antes de entregar. Depósito lleno en Kastrati.</div>
+        </div>
+      </div>
+      <div class="day-route">
+        <span class="dr-icon">✈️</span>
+        <span class="dr-text"><strong>Ruta del día:</strong> Himarë → Lago Bovilla (SH56) → Tirana → TIA · ~4.5h total · Último desvío: Bovilla a 30 min del centro</span>
+        <div class="dr-links">
+          <a class="rlink primary" href="https://www.google.com/maps/dir/Himara+Albania/Bovilla+Reservoir+Albania/Mother+Teresa+Airport+Tirana" target="_blank">📍 Ruta completa ↗</a>
+          <a class="rlink" href="https://www.google.com/maps/place/Bovilla+Reservoir,+Albania" target="_blank">Bovilla ↗</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /days-stack -->
 
   <!-- BOVILLA HIGHLIGHT -->
-  <div class="bovilla-section">
+  <div class="bovilla-box">
     <div class="bovilla-label">Parada especial · Día 7</div>
     <div class="bovilla-title">Lago <em>Bovilla</em> — La joya escondida junto a Tirana</div>
     <div class="bovilla-body">
       <div>
-        <div class="bovilla-fact"><div class="bf-dot"></div><div class="bf-text"><strong>Por qué aquí y no antes:</strong> Está a solo 30 min de Tirana por la carretera de montaña. Es la parada más rentable del viaje: de paso obligado en el Día 7, sin desvío.</div></div>
-        <div class="bovilla-fact"><div class="bf-dot"></div><div class="bf-text"><strong>Qué esperar:</strong> Un embalse de montaña de color turquesa intenso rodeado de picos de más de 1.800m. La combinación agua + roca + cielo es brutalmente fotogénica.</div></div>
-        <div class="bovilla-fact"><div class="bf-dot"></div><div class="bf-text"><strong>Mejor vista:</strong> Desde la presa (Dam de Bovilla). Se llega en coche por la carretera SH56 que sube desde Tirana. 25 km desde el centro.</div></div>
-        <div class="bovilla-fact"><div class="bf-dot"></div><div class="bf-text"><strong>Tiempo estimado:</strong> 1–1.5h en el sitio (conducción + parada + fotos). Encaja perfectamente entre llegar a Tirana (12:00) y empezar el "Tirana Express" (13:30–14:00).</div></div>
+        <div class="bov-fact"><div class="bov-dot"></div><div class="bov-text"><strong>Por qué aquí:</strong> A solo 30 min de Tirana por la carretera SH56. Sin desvío real — de paso obligado el Día 7. La parada más rentable del viaje.</div></div>
+        <div class="bov-fact"><div class="bov-dot"></div><div class="bov-text"><strong>Qué esperar:</strong> Embalse de montaña de color turquesa intenso rodeado de picos de más de 1.800m. Brutalmente fotogénico.</div></div>
+        <div class="bov-fact"><div class="bov-dot"></div><div class="bov-text"><strong>Mejor vista:</strong> Desde la presa (Dam de Bovilla). Se llega por SH56 desde Tirana. 25 km desde el centro.</div></div>
+        <div class="bov-fact"><div class="bov-dot"></div><div class="bov-text"><strong>Tiempo:</strong> 1–1.5h total (conducción + parada + fotos). Encaja perfectamente entre las 12:00 y las 13:30.</div></div>
       </div>
       <div>
-        <div class="bovilla-why">
-          <strong>Estrategia del Día 7 con Bovilla:</strong><br><br>
-          08:00 Salida desde Riviera<br>
-          11:30–12:00 Llegada zona Tirana<br>
+        <div class="bov-strat">
+          <strong>Estrategia Día 7 con Bovilla:</strong><br><br>
+          08:00 — Salida desde Himarë<br>
+          11:30 — Llegada zona Tirana<br>
           12:00 → Desvío Bovilla (30 min coche)<br>
-          12:30–13:30 Presa + fotos + respiro<br>
-          13:30 → Regreso a Tirana centro<br>
-          14:00–15:30 Tirana Express<br>
-          15:30 Salida parking Skanderbeg<br>
-          16:15 Gasolinera Kastrati<br>
-          16:30 Entrega coche<br>
-          18:20 Vuelo de vuelta ✈
+          12:30–13:30 — Presa + fotos + respiro<br>
+          13:30 → Regreso Tirana centro<br>
+          14:00–15:30 — Tirana Express<br>
+          15:30 — Salida parking Skanderbeg<br>
+          16:15 — Gasolinera Kastrati<br>
+          16:30 — Entrega coche<br>
+          18:20 — Vuelo de regreso ✈
         </div>
-        <a class="rlink" href="https://www.google.com/maps/place/Bovilla+Reservoir,+Albania" target="_blank" style="margin-top:12px;display:inline-flex">Ver en Maps ↗</a>
+        <a class="rlink primary" href="https://www.google.com/maps/place/Bovilla+Reservoir,+Albania" target="_blank" style="margin-top:12px;display:inline-flex">Ver Bovilla en Maps ↗</a>
       </div>
     </div>
   </div>
 
-</div>
+</div><!-- /itinerario -->
 
-<!-- VUELOS Y COCHE -->
-<div id="vuelos" class="section">
-  <div class="section-header">
-    <div class="section-label">Transporte confirmado</div>
-    <h2 class="section-title">Vuelos <em>& coche</em></h2>
+
+<!-- ═══════════ ALOJAMIENTO ═══════════ -->
+<div id="alojamiento" class="section">
+  <div class="sec-eyebrow">4 noches confirmadas + 2 por definir</div>
+  <h2 class="sec-title"><em>Alojamiento</em> — todas las opciones</h2>
+
+  <div class="hotel-nights">
+
+    <!-- Shkodër -->
+    <div class="hn">
+      <div class="hn-head">
+        <div class="hn-day">1</div>
+        <div class="hn-info">
+          <div class="hn-name">Shkodër</div>
+          <div class="hn-date">Viernes 29 — Sábado 30 mayo · 1 noche</div>
+        </div>
+      </div>
+      <div class="hn-cards">
+        <a class="hc bk-card" href="https://www.booking.com/Share-qut6O3" target="_blank">
+          <div class="hc-platform">📘 Booking.com</div>
+          <div class="hc-name">Amo's Hotel</div>
+          <div class="hc-loc">📍 Shkodër, Albania</div>
+          <div class="hc-cta">Ver disponibilidad →</div>
+        </a>
+        <a class="hc bk-card" href="https://www.booking.com/Share-ZzIxx8" target="_blank">
+          <div class="hc-platform">📘 Booking.com</div>
+          <div class="hc-name">Kulla e Sadri Lukes</div>
+          <div class="hc-loc">📍 Shkodër, Albania</div>
+          <div class="hc-cta">Ver disponibilidad →</div>
+        </a>
+      </div>
+      <div class="hn-footer undecided-footer">⚡ Sin decidir — revisar ambas opciones y elegir</div>
+    </div>
+
+    <!-- Theth -->
+    <div class="hn">
+      <div class="hn-head">
+        <div class="hn-day">2</div>
+        <div class="hn-info">
+          <div class="hn-name">Theth — Alpes Albaneses</div>
+          <div class="hn-date">Sábado 30 — Domingo 31 mayo · 1 noche</div>
+        </div>
+      </div>
+      <div class="hn-cards">
+        <a class="hc bk-card" href="https://www.booking.com/Share-qd8d228" target="_blank">
+          <div class="hc-platform">📘 Booking.com</div>
+          <div class="hc-name">Guesthouse Gjoni Theth</div>
+          <div class="hc-loc">📍 Theth, Albania</div>
+          <div class="hc-cta">Ver disponibilidad →</div>
+        </a>
+        <a class="hc bk-card" href="https://www.booking.com/Share-OaMp0m" target="_blank">
+          <div class="hc-platform">📘 Booking.com</div>
+          <div class="hc-name">Bujtina Arlindi</div>
+          <div class="hc-loc">📍 Theth, Albania</div>
+          <div class="hc-cta">Ver disponibilidad →</div>
+        </a>
+      </div>
+      <div class="hn-footer undecided-footer">⚡ Sin decidir — pedir picnic para el día del trekking al reservar</div>
+    </div>
+
+    <!-- Valbona -->
+    <div class="hn">
+      <div class="hn-head">
+        <div class="hn-day">3</div>
+        <div class="hn-info">
+          <div class="hn-name">Valbona — Llegada tras el trekking</div>
+          <div class="hn-date">Domingo 31 mayo — Lunes 1 junio · 1 noche</div>
+        </div>
+      </div>
+      <div class="hn-cards">
+        <a class="hc bk-card" href="https://www.booking.com/Share-Sg2wNo" target="_blank">
+          <div class="hc-platform">📘 Booking.com</div>
+          <div class="hc-name">Guesthouse Gezim Selimaj</div>
+          <div class="hc-loc">📍 Valbona, Albania</div>
+          <div class="hc-cta">Ver disponibilidad →</div>
+        </a>
+        <a class="hc bk-card" href="https://www.booking.com/Share-7Qn5OW" target="_blank">
+          <div class="hc-platform">📘 Booking.com</div>
+          <div class="hc-name">Guesthouse Emiljano</div>
+          <div class="hc-loc">📍 Valbona, Albania</div>
+          <div class="hc-cta">Ver disponibilidad →</div>
+        </a>
+      </div>
+      <div class="hn-footer undecided-footer">⚡ Sin decidir — reservar el furgon al día siguiente (→ Fierzë) al hacer check-in</div>
+    </div>
+
+    <!-- Berat -->
+    <div class="hn">
+      <div class="hn-head">
+        <div class="hn-day">4</div>
+        <div class="hn-info">
+          <div class="hn-name">Berat — Ciudad de las Mil Ventanas</div>
+          <div class="hn-date">Lunes 1 — Martes 2 junio · 1 noche · Por elegir</div>
+        </div>
+      </div>
+      <div class="hn-cards" style="grid-template-columns:1fr">
+        <a class="hc bk-card" href="https://www.booking.com/Share-UlOIb9" target="_blank">
+          <div class="hc-platform">📘 Booking.com</div>
+          <div class="hc-name">Villa Sophie Berat Castle</div>
+          <div class="hc-loc">📍 Berat, Albania · Junto al castillo</div>
+          <div class="hc-cta">Ver disponibilidad →</div>
+        </a>
+      </div>
+      <div class="hn-footer undecided-footer">⚡ Sin decidir — única opción disponible en Booking para esta noche</div>
+    </div>
+
+    <!-- Sur CONFIRMADO -->
+    <div class="hn">
+      <div class="hn-head">
+        <div class="hn-day" style="font-size:1.1rem">5–6</div>
+        <div class="hn-info">
+          <div class="hn-name">Sur Albanés — Ksamil / Sarandë / Himarë</div>
+          <div class="hn-date">Martes 2 — Jueves 4 junio · 2 noches · Airbnb pagado 164,53€ ✓</div>
+        </div>
+      </div>
+      <div class="hn-cards" style="grid-template-columns:1fr">
+        <a class="hc ab-card" href="https://es-l.airbnb.com/rooms/1145577331018403572" target="_blank">
+          <div class="hc-platform">🌸 Airbnb · ✓ Pagado — 164,53€</div>
+          <div class="hc-name">Apartamento en el Sur Albanés</div>
+          <div class="hc-loc">📍 2 noches (2 jun → 4 jun) · Ksamil / Sarandë / Himarë</div>
+          <div class="hc-cta">Ver alojamiento →</div>
+        </a>
+      </div>
+      <div class="hn-footer confirmed-footer">✓ Confirmado y pagado — 164,53€ · 2 noches incluidas en este alojamiento</div>
+    </div>
+
   </div>
+</div><!-- /alojamiento -->
+
+
+<!-- ═══════════ VUELOS & COCHE ═══════════ -->
+<div id="vuelos" class="section">
+  <div class="sec-eyebrow">Transporte confirmado ✓</div>
+  <h2 class="sec-title">Vuelos <em>& coche</em></h2>
+
   <div class="flights-grid">
     <div class="flight-card">
-      <div class="flight-airline">WizzAir <span class="flight-arrow">·</span> Ida</div>
+      <div class="flight-airline">WizzAir · W6 3952 · Ida</div>
       <div class="f-row">
         <div><div class="f-apt">MAD</div><div class="f-time">Jue 28 mayo · 22:40</div></div>
-        <div class="f-sep"><div class="f-line"></div><div class="f-plane">✈</div><div class="f-line"></div></div>
+        <div class="f-sep"><div class="f-line"></div><span style="font-size:18px">✈</span><div class="f-line"></div></div>
         <div><div class="f-apt">TIA</div><div class="f-time">Vie 29 mayo · 01:50</div></div>
       </div>
       <div class="f-price">50€ <span style="font-size:.85rem;color:var(--muted)">/ persona</span></div>
-      <div class="f-note">Mochila 8 kg incluida · Maleta 20 kg: +28€</div>
-      <div class="confirmed-badge">Confirmado</div><br>
+      <div class="f-note">Mochila 8 kg incluida · Maleta 20 kg: +28€ extra</div>
+      <div class="ok-badge">Confirmado · 100€ total</div><br>
       <a class="rlink" href="https://www.wizzair.com/es-es/check-in" target="_blank" style="margin-top:10px">Check-in WizzAir ↗</a>
     </div>
     <div class="flight-card return">
-      <div class="flight-airline">WizzAir <span class="flight-arrow">·</span> Vuelta</div>
+      <div class="flight-airline">WizzAir · W6 3953 · Vuelta</div>
       <div class="f-row">
         <div><div class="f-apt">TIA</div><div class="f-time">Jue 4 junio · 18:20</div></div>
-        <div class="f-sep"><div class="f-line"></div><div class="f-plane">✈</div><div class="f-line"></div></div>
+        <div class="f-sep"><div class="f-line"></div><span style="font-size:18px">✈</span><div class="f-line"></div></div>
         <div><div class="f-apt">MAD</div><div class="f-time">Jue 4 junio · 21:55</div></div>
       </div>
       <div class="f-price">40€ <span style="font-size:.85rem;color:var(--muted)">/ persona</span></div>
-      <div class="f-note">Mochila 8 kg incluida · Maleta 20 kg: +28€</div>
-      <div class="confirmed-badge">Confirmado</div><br>
+      <div class="f-note">Mochila 8 kg incluida · Maleta 20 kg: +28€ extra</div>
+      <div class="ok-badge">Confirmado · 80€ total</div><br>
       <a class="rlink" href="https://www.wizzair.com/es-es/check-in" target="_blank" style="margin-top:10px">Check-in WizzAir ↗</a>
     </div>
   </div>
+
   <div class="car-card">
     <div class="car-info">
-      <h3>Coche de alquiler — Rinas (TIA)</h3>
-      <p>28 mayo 02:00 AM — 4 junio 17:00 PM · 8 días completos<br>
-      Días sin coche (Días 2–4): aparcado en Shkodër (4–5€/día)<br>
-      Devolver con depósito lleno: gasolinera Kastrati junto al aeropuerto<br>
-      Depósito de seguridad 1.500€ reembolsable · Revisar daños antes de entregar</p>
+      <h3>Coche de alquiler — Rinas (TIA) · con seguro Booking</h3>
+      <p>
+        Recogida: 29 mayo · 02:00 AM — Devolución: 4 junio · 17:00 PM · 7 días<br>
+        Días sin coche (Días 2–4): aparcado en Shkodër (4–5€/día)<br>
+        Devolver con depósito lleno: gasolinera Kastrati junto al aeropuerto<br>
+        Depósito de seguridad 1.500€ reembolsable · Revisar daños antes de entregar
+      </p>
     </div>
     <div class="car-stats">
-      <div class="car-stat"><span class="car-stat-val">99,74€</span><span class="car-stat-lbl">Alquiler total</span></div>
-      <div class="car-stat"><span class="car-stat-val">~1.000 km</span><span class="car-stat-lbl">Distancia</span></div>
+      <div class="car-stat"><span class="csv">164,24€</span><span class="csl">Total + seguro ✓</span></div>
+      <div class="car-stat"><span class="csv">~1.000 km</span><span class="csl">Distancia est.</span></div>
     </div>
   </div>
-</div>
+</div><!-- /vuelos -->
 
-<!-- RUTAS -->
+
+<!-- ═══════════ RUTAS Y MAPAS ═══════════ -->
 <div id="rutas" class="section">
-  <div class="section-header">
-    <div class="section-label">Google Maps · AllTrails</div>
-    <h2 class="section-title">Rutas <em>& enlaces</em></h2>
-  </div>
-  <div class="routes-list">
-    <div class="route-item">
-      <div class="route-day-badge">1</div>
-      <div class="route-body">
-        <div class="route-name">Aeropuerto Tirana (TIA) → Shkodër</div>
-        <div class="route-detail">~1h · 100 km · Autovía SH1 norte · Sin tráfico de madrugada</div>
-      </div>
-      <div class="route-links">
-        <a class="rlink" href="https://maps.app.goo.gl/YdkQLzEWiNJ2Ni1i9" target="_blank">Maps ↗</a>
-        <a class="rlink" href="https://www.google.com/maps/dir/Tirana+International+Airport/Shkodër,+Albania" target="_blank">Ruta ↗</a>
-      </div>
-    </div>
-    <div class="route-item">
-      <div class="route-day-badge">4</div>
-      <div class="route-body">
-        <div class="route-name">Shkodër → Berat (escala recomendada)</div>
-        <div class="route-detail">~3.5h · 200 km · Vía Lezhë y Durrës · Más sensato que conducir 6h a Sarandë</div>
-      </div>
-      <div class="route-links">
-        <a class="rlink" href="https://www.google.com/maps/dir/Shkodër,+Albania/Berat,+Albania" target="_blank">Ruta ↗</a>
-      </div>
-    </div>
-    <div class="route-item">
-      <div class="route-day-badge">5</div>
-      <div class="route-body">
-        <div class="route-name">Berat → Ksamil (llegada al sur)</div>
-        <div class="route-detail">~2.5h · 160 km · Vía Fier y Vlorë · Paisaje costero en la última hora</div>
-      </div>
-      <div class="route-links">
-        <a class="rlink" href="https://www.google.com/maps/dir/Berat,+Albania/Ksamil,+Albania" target="_blank">Ruta ↗</a>
-      </div>
-    </div>
-    <div class="route-item">
-      <div class="route-day-badge">6</div>
-      <div class="route-body">
-        <div class="route-name">Sarandë → Himarë (Ruta SH8)</div>
-        <div class="route-detail">~1.5h · 50 km · La carretera más espectacular de Albania · Parada en Porto Palermo</div>
-      </div>
-      <div class="route-links">
-        <a class="rlink" href="https://www.google.com/maps/dir/Sarandë,+Albania/Himarë,+Albania" target="_blank">Ruta costera ↗</a>
-      </div>
-    </div>
-    <div class="route-item route-special">
-      <div class="route-day-badge">7</div>
-      <div class="route-body">
-        <div class="route-name">★ Himarë → Lago Bovilla → Tirana</div>
-        <div class="route-detail">~4h total · Llogara Pass + SH56 a Bovilla · Desvío de solo 30 min desde Tirana · Embalse turquesa a 1.000m de altitud</div>
-      </div>
-      <div class="route-links">
-        <a class="rlink" href="https://www.google.com/maps/place/Bovilla+Reservoir,+Albania" target="_blank">Bovilla ↗</a>
-        <a class="rlink" href="https://www.google.com/maps/dir/Himarë,+Albania/Tirana,+Albania" target="_blank">Ruta ↗</a>
-      </div>
-    </div>
-    <div class="route-item">
-      <div class="route-day-badge">3</div>
-      <div class="route-body">
-        <div class="route-name">Trekking Theth → Valbona Pass</div>
-        <div class="route-detail">17 km · +1.050m · 6.5–8h · Marcas roja/blanca · Descargar offline antes de salir</div>
-      </div>
-      <div class="route-links">
-        <a class="rlink" href="https://www.alltrails.com/trail/albania/diber/theth-valbona-pass" target="_blank">AllTrails ↗</a>
-        <a class="rlink" href="https://maps.me" target="_blank">Maps.me ↗</a>
-      </div>
-    </div>
-    <div class="route-item">
-      <div class="route-day-badge">4</div>
-      <div class="route-body">
-        <div class="route-name">Ferry Lago Koman (Fierzë → Koman)</div>
-        <div class="route-detail">Salida 13:00 · 2.5–3h · Cubierta obligatoria · Uno de los mejores trayectos en barco de Europa</div>
-      </div>
-      <div class="route-links">
-        <a class="rlink" href="https://www.komandoferry.com" target="_blank">Reserva ↗</a>
-      </div>
-    </div>
-    <div class="route-item">
-      <div class="route-day-badge">5</div>
-      <div class="route-body">
-        <div class="route-name">Gjipe Beach — La playa del cañón</div>
-        <div class="route-detail">20 min caminando desde parking · Cañón que desemboca en playa virgen · Llevar efectivo LEK para parking</div>
-      </div>
-      <div class="route-links">
-        <a class="rlink" href="https://www.google.com/maps/place/Gjipe+Beach,+Albania" target="_blank">Ubicación ↗</a>
-      </div>
-    </div>
-  </div>
-</div>
+  <div class="sec-eyebrow">Google Maps · AllTrails</div>
+  <h2 class="sec-title">Rutas <em>& mapas</em></h2>
 
-<!-- PRESUPUESTO -->
-<div id="presupuesto" class="section">
-  <div class="section-header">
-    <div class="section-label">Estimación rigurosa</div>
-    <h2 class="section-title">Presu<em>puesto</em></h2>
+  <div class="routes-list">
+
+    <div class="route-item">
+      <div class="rb">1</div>
+      <div>
+        <div class="rn">Aeropuerto TIA → Shkodër</div>
+        <div class="rd">~1h · 100 km · Autovía SH1 norte · Sin tráfico de madrugada</div>
+      </div>
+      <div class="rl">
+        <a class="rlink primary" href="https://www.google.com/maps/dir/Mother+Teresa+Airport+Tirana+Albania/Shkoder+Albania" target="_blank">Maps ↗</a>
+      </div>
+    </div>
+
+    <div class="route-item">
+      <div class="rb">2</div>
+      <div>
+        <div class="rn">Shkodër → Theth (en furgón)</div>
+        <div class="rd">~2.5–3h · Paso Thore (1.600m) · Paisaje de vértigo · ~1.200 LEK pp</div>
+      </div>
+      <div class="rl">
+        <a class="rlink primary" href="https://www.google.com/maps/dir/Shkoder+Albania/Theth+Albania" target="_blank">Maps ↗</a>
+      </div>
+    </div>
+
+    <div class="route-item special">
+      <div class="rb">3</div>
+      <div>
+        <div class="rn">★ Trekking Theth → Valbona Pass (1.795m)</div>
+        <div class="rd">17 km · +1.050m desnivel · 6.5–8h · Marcas roja/blanca · Descargar offline antes de salir</div>
+      </div>
+      <div class="rl">
+        <a class="rlink primary" href="https://www.alltrails.com/trail/albania/diber/theth-valbona-pass" target="_blank">AllTrails ↗</a>
+        <a class="rlink" href="https://www.google.com/maps/dir/Theth+Albania/Valbona+Albania" target="_blank">Maps ↗</a>
+      </div>
+    </div>
+
+    <div class="route-item">
+      <div class="rb">4</div>
+      <div>
+        <div class="rn">Ferry Lago Koman (Fierzë → Koman)</div>
+        <div class="rd">Salida 13:00 · 2.5–3h · Cubierta superior obligatoria · Uno de los mejores trayectos en barco de Europa</div>
+      </div>
+      <div class="rl">
+        <a class="rlink primary" href="https://www.komandoferry.com" target="_blank">Reserva ferry ↗</a>
+        <a class="rlink" href="https://www.google.com/maps/dir/Fierze+Albania/Koman+Albania" target="_blank">Maps ↗</a>
+      </div>
+    </div>
+
+    <div class="route-item">
+      <div class="rb">4</div>
+      <div>
+        <div class="rn">Shkodër → Berat (tras el ferry)</div>
+        <div class="rd">~3h · 200 km · Vía Lezhë y Durrës · Conducir con cuidado tras día largo</div>
+      </div>
+      <div class="rl">
+        <a class="rlink primary" href="https://www.google.com/maps/dir/Shkoder+Albania/Berat+Albania" target="_blank">Maps ↗</a>
+      </div>
+    </div>
+
+    <div class="route-item">
+      <div class="rb">5</div>
+      <div>
+        <div class="rn">Berat → Ksamil</div>
+        <div class="rd">~2.5h · 160 km · Vía Fier y Vlorë · Paisaje costero en la última hora</div>
+      </div>
+      <div class="rl">
+        <a class="rlink primary" href="https://www.google.com/maps/dir/Berat+Albania/Ksamil+Albania" target="_blank">Maps ↗</a>
+      </div>
+    </div>
+
+    <div class="route-item">
+      <div class="rb">5</div>
+      <div>
+        <div class="rn">Gjipe Beach — La playa del cañón</div>
+        <div class="rd">20 min caminando desde parking · Cañón que desemboca en playa virgen · Efectivo LEK para parking</div>
+      </div>
+      <div class="rl">
+        <a class="rlink primary" href="https://www.google.com/maps/place/Gjipe+Beach,+Albania" target="_blank">Ubicación ↗</a>
+      </div>
+    </div>
+
+    <div class="route-item">
+      <div class="rb">6</div>
+      <div>
+        <div class="rn">Sarandë → Himarë (Ruta SH8 costera)</div>
+        <div class="rd">~1.5h · 50 km · La carretera más espectacular de Albania · Parada en Porto Palermo</div>
+      </div>
+      <div class="rl">
+        <a class="rlink primary" href="https://www.google.com/maps/dir/Sarande+Albania/Himara+Albania" target="_blank">Ruta costera ↗</a>
+      </div>
+    </div>
+
+    <div class="route-item special">
+      <div class="rb">7</div>
+      <div>
+        <div class="rn">★ Himarë → Lago Bovilla → Tirana → TIA</div>
+        <div class="rd">~4.5h total · Llogara Pass + SH56 a Bovilla · Desvío de solo 30 min desde Tirana · Embalse turquesa a 1.000m</div>
+      </div>
+      <div class="rl">
+        <a class="rlink primary" href="https://www.google.com/maps/dir/Himara+Albania/Bovilla+Reservoir+Albania/Mother+Teresa+Airport+Tirana" target="_blank">Ruta completa ↗</a>
+        <a class="rlink" href="https://www.google.com/maps/place/Bovilla+Reservoir,+Albania" target="_blank">Bovilla ↗</a>
+      </div>
+    </div>
+
   </div>
+</div><!-- /rutas -->
+
+
+<!-- ═══════════ PRESUPUESTO ═══════════ -->
+<div id="presupuesto" class="section">
+  <div class="sec-eyebrow">Estimación con datos reales</div>
+  <h2 class="sec-title">Presu<em>puesto</em></h2>
+
+  <!-- CONFIRMED BANNER -->
+  <div class="budget-banner">
+    <div class="bb-val">508,77€</div>
+    <div class="bb-info">
+      <div class="bb-label">✓ Ya pagado — confirmado</div>
+      <div class="bb-items">
+        Vuelos MAD ↔ TIA (2 pax): <strong>180,00€</strong> &nbsp;·&nbsp;
+        Coche + seguro Booking: <strong>164,24€</strong> &nbsp;·&nbsp;
+        Airbnb Sur albanés (2 noches): <strong>164,53€</strong>
+      </div>
+    </div>
+  </div>
+
   <div class="budget-layout">
+    <!-- TABLE -->
     <div class="budget-table">
       <div class="bt-head">
-        <div class="bt-head-l">Concepto</div>
-        <div class="bt-head-r" style="text-align:right">Importe</div>
+        <div class="bt-hl">Concepto</div>
+        <div class="bt-hr">Importe</div>
       </div>
-      <div class="bt-row confirmed">
-        <div class="bt-left">Vuelos ida + vuelta (2 personas)<small>50€ pp ida · 40€ pp vuelta · ya comprados ✓</small></div>
-        <div class="bt-right" style="color:var(--teal)">180 €</div>
+
+      <div class="bt-row ok">
+        <div class="bt-lbl">Vuelos ida + vuelta (2 personas)<small>50€ pp ida (WizzAir) + 40€ pp vuelta · ✓ Comprados</small></div>
+        <div class="bt-amt">180 €</div>
       </div>
-      <div class="bt-row confirmed">
-        <div class="bt-left">Coche de alquiler (8 días)<small>99,74€ · ya reservado ✓</small></div>
-        <div class="bt-right" style="color:var(--teal)">100 €</div>
+      <div class="bt-row ok">
+        <div class="bt-lbl">Coche de alquiler + seguro Booking<small>164,24€ · ✓ Reservado</small></div>
+        <div class="bt-amt">164 €</div>
       </div>
-      <div class="bt-row">
-        <div class="bt-left">Gasolina<small>900–1.000 km estimados</small></div>
-        <div class="bt-right">110 €</div>
+      <div class="bt-row ok">
+        <div class="bt-lbl">Airbnb Sur albanés (noches 2–4 junio · 2 noches)<small>164,53€ · ✓ Pagado · Ksamil/Sarandë/Himarë</small></div>
+        <div class="bt-amt">165 €</div>
       </div>
-      <div class="bt-row">
-        <div class="bt-left">Alojamiento (6 noches)<small>Guesthouses norte + apartamento sur</small></div>
-        <div class="bt-right">400 €</div>
+      <div class="bt-row est">
+        <div class="bt-lbl">Hoteles norte (3 noches: Shkodër, Theth, Valbona)<small>~35–40€/noche · Media estimada · Por elegir</small></div>
+        <div class="bt-amt">~112 €</div>
       </div>
-      <div class="bt-row">
-        <div class="bt-left">Comida (7 días · 2 personas)<small>20–30€/persona/día</small></div>
-        <div class="bt-right">300 €</div>
+      <div class="bt-row est">
+        <div class="bt-lbl">Hotel Berat (1 noche: 1–2 junio)<small>~50–70€ · Villa Sophie u opción similar · Por reservar</small></div>
+        <div class="bt-amt">~60 €</div>
       </div>
-      <div class="bt-row">
-        <div class="bt-left">Ferry Lago Koman (2 personas)<small>~14–20€ pp sin coche</small></div>
-        <div class="bt-right">40 €</div>
+      <div class="bt-row est">
+        <div class="bt-lbl">Gasolina<small>~900–1.000 km estimados · ~0.12€/km en Albania</small></div>
+        <div class="bt-amt">~110 €</div>
       </div>
-      <div class="bt-row">
-        <div class="bt-left">Furgones montaña (Días 2 y 4)<small>Shkodër→Theth + Valbona→Fierzë</small></div>
-        <div class="bt-right">50 €</div>
+      <div class="bt-row est">
+        <div class="bt-lbl">Comida (7 días · 2 personas)<small>20–30€/persona/día en restaurantes locales</small></div>
+        <div class="bt-amt">~300 €</div>
       </div>
-      <div class="bt-row">
-        <div class="bt-left">Actividades<small>Kayak Ksamil, entradas castillos, Bovilla</small></div>
-        <div class="bt-right">60 €</div>
+      <div class="bt-row est">
+        <div class="bt-lbl">Ferry Lago Koman (2 personas)<small>~14–20€ pp sin coche</small></div>
+        <div class="bt-amt">~40 €</div>
       </div>
-      <div class="bt-row">
-        <div class="bt-left">Extras<small>Parkings, cafés, SIM Vodafone Albania (20–30€)</small></div>
-        <div class="bt-right">60 €</div>
+      <div class="bt-row est">
+        <div class="bt-lbl">Furgones (Shkodër→Theth + Valbona→Fierzë)<small>~1.200 LEK pp cada trayecto</small></div>
+        <div class="bt-amt">~50 €</div>
+      </div>
+      <div class="bt-row est">
+        <div class="bt-lbl">Actividades<small>Kayak Ksamil, entradas castillos</small></div>
+        <div class="bt-amt">~60 €</div>
+      </div>
+      <div class="bt-row est">
+        <div class="bt-lbl">Extras<small>Parkings Shkodër (~15€), cafés, SIM Vodafone Albania (~25€)</small></div>
+        <div class="bt-amt">~60 €</div>
       </div>
       <div class="bt-row total">
-        <div class="bt-left">Total estimado (pareja)<small>Rango: 1.160€ – 1.440€</small></div>
-        <div class="bt-right">~1.300 €</div>
+        <div class="bt-lbl" style="font-weight:500">Total estimado (pareja)<small>Rango realista: 1.180€ – 1.420€</small></div>
+        <div class="bt-amt">~1.280 €</div>
       </div>
     </div>
 
+    <!-- SIDEBAR -->
     <div class="budget-sidebar">
+
       <div class="bs-card">
-        <div class="bs-card-title">Por persona</div>
-        <div class="big-stat">
-          <span class="big-stat-val">~650€</span>
-          <div class="big-stat-lbl">estimación central</div>
-        </div>
+        <div class="bs-title">Por persona</div>
+        <span class="big-n">~640€</span>
+        <div class="big-n-lbl">estimación central</div>
         <div class="range-bar">
-          <span>580€</span>
+          <span>590€</span>
           <div class="rb-track"><div class="rb-fill"></div></div>
-          <span>700€</span>
+          <span>710€</span>
         </div>
       </div>
 
       <div class="bs-card">
-        <div class="bs-card-title">Ya confirmado</div>
-        <div class="paid-row"><span>Vuelo ida (2 pax)</span><span class="paid-check">100€ ✓</span></div>
-        <div class="paid-row"><span>Vuelo vuelta (2 pax)</span><span class="paid-check">80€ ✓</span></div>
-        <div class="paid-row"><span>Coche 8 días</span><span class="paid-check">99,74€ ✓</span></div>
-        <div class="paid-row"><span style="font-weight:500">Total pagado</span><span class="paid-check" style="font-size:1.1rem">~280€</span></div>
-        <div style="font-size:11.5px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">Pendiente en destino: ~1.020€ en efectivo/tarjeta</div>
+        <div class="bs-title">Ya pagado ✓</div>
+        <div class="paid-row"><span>Vuelos ida (2 pax)</span><span class="pc">100,00€ ✓</span></div>
+        <div class="paid-row"><span>Vuelos vuelta (2 pax)</span><span class="pc">80,00€ ✓</span></div>
+        <div class="paid-row"><span>Coche + seguro</span><span class="pc">164,24€ ✓</span></div>
+        <div class="paid-row"><span>Airbnb Sur (2 noches)</span><span class="pc">164,53€ ✓</span></div>
+        <div class="paid-row"><span style="font-weight:600">Total pagado</span><span class="pc" style="font-size:1.1rem;color:var(--teal)">508,77€</span></div>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+          Pendiente en destino (estimado): ~770€ entre efectivo y tarjeta
+        </div>
       </div>
 
       <div class="bs-card">
-        <div class="bs-card-title">Tips de dinero</div>
-        <div class="ib-item" style="padding:6px 0;border-bottom:1px solid var(--border)"><div class="ib-dot"></div><div class="ib-text" style="font-size:12.5px">1€ ≈ 100 LEK albaneses</div></div>
-        <div class="ib-item" style="padding:6px 0;border-bottom:1px solid var(--border)"><div class="ib-dot"></div><div class="ib-text" style="font-size:12.5px">Sacar mucho efectivo en Shkodër (Credins Bank / OTP)</div></div>
-        <div class="ib-item" style="padding:6px 0;border-bottom:1px solid var(--border)"><div class="ib-dot"></div><div class="ib-text" style="font-size:12.5px">Theth y Valbona: cero cajeros, solo LEK</div></div>
-        <div class="ib-item" style="padding:6px 0"><div class="ib-dot"></div><div class="ib-text" style="font-size:12.5px">Restaurante local: 10–15€ · Cerveza: 2–3€</div></div>
+        <div class="bs-title">Dinero en Albania</div>
+        <div class="money-tips">
+          <div class="mt-item"><div class="mt-dot"></div><div class="mt-text">1€ ≈ 100 LEK albaneses</div></div>
+          <div class="mt-item"><div class="mt-dot"></div><div class="mt-text">Sacar mucho efectivo en Shkodër (Credins Bank / OTP)</div></div>
+          <div class="mt-item"><div class="mt-dot"></div><div class="mt-text">Theth y Valbona: cero cajeros, solo LEK en efectivo</div></div>
+          <div class="mt-item"><div class="mt-dot"></div><div class="mt-text">Restaurante local: 10–15€ · Cerveza: 2–3€ · Café: 1€</div></div>
+          <div class="mt-item"><div class="mt-dot"></div><div class="mt-text">Sur (Sarandë, Ksamil): se acepta tarjeta en la mayoría de sitios</div></div>
+        </div>
       </div>
+
     </div>
   </div>
-</div>
+</div><!-- /presupuesto -->
 
-<!-- GUÍA -->
+
+<!-- ═══════════ GUÍA ═══════════ -->
 <div id="info" class="section">
-  <div class="section-header">
-    <div class="section-label">Survival guide</div>
-    <h2 class="section-title">Guía <em>práctica</em></h2>
-  </div>
-  <div class="info-masonry">
+  <div class="sec-eyebrow">Survival guide</div>
+  <h2 class="sec-title">Guía <em>práctica</em></h2>
+
+  <div class="info-grid">
 
     <div class="info-block">
       <div class="ib-head"><div class="ib-title">Logística esencial</div></div>
       <div class="ib-body">
         <div class="ib-item"><div class="ib-dot"></div><div class="ib-text">Albania NO es UE: sin roaming gratuito español</div></div>
-        <div class="ib-item"><div class="ib-dot"></div><div class="ib-text">SIM Vodafone Albania en el aeropuerto TIA. 20–30€ por muchos GB</div></div>
+        <div class="ib-item"><div class="ib-dot"></div><div class="ib-text">SIM Vodafone Albania en el aeropuerto TIA: 20–30€ por muchos GB</div></div>
         <div class="ib-item"><div class="ib-dot"></div><div class="ib-text">Shkodër y Tirana: agua embotellada siempre</div></div>
         <div class="ib-item"><div class="ib-dot"></div><div class="ib-text">Theth y Valbona: fuentes de montaña puras y deliciosas</div></div>
-        <div class="ib-item"><div class="ib-dot"></div><div class="ib-text">Apps: Maps.me (offline Albania), AllTrails, Google Maps</div></div>
-        <div class="ib-item"><div class="ib-dot"></div><div class="ib-text">Depósito coche: 1.500€ (reembolsable). Revisar cobertura del seguro</div></div>
+        <div class="ib-item"><div class="ib-dot"></div><div class="ib-text">Apps imprescindibles: Maps.me (offline Albania), AllTrails, Google Maps</div></div>
+        <div class="ib-item"><div class="ib-dot"></div><div class="ib-text">Depósito coche: 1.500€ reembolsable. Fotos 360° antes de salir del aeropuerto</div></div>
       </div>
     </div>
 
@@ -990,7 +1146,7 @@ body{
           <div class="food-item"><div class="food-name">Byrek</div><div class="food-desc">Hojaldre relleno. El desayuno de campeones.</div></div>
           <div class="food-item"><div class="food-name">Qofte</div><div class="food-desc">Albóndigas alargadas a la brasa.</div></div>
           <div class="food-item"><div class="food-name">Fërgesë</div><div class="food-desc">Pimientos, tomates y feta caliente.</div></div>
-          <div class="food-item"><div class="food-name">Raki</div><div class="food-desc">Aguardiente local. Cuidado: muy fuerte.</div></div>
+          <div class="food-item"><div class="food-name">Raki</div><div class="food-desc">Aguardiente local. Con cuidado: muy fuerte.</div></div>
         </div>
       </div>
     </div>
@@ -999,14 +1155,14 @@ body{
       <div class="ib-head"><div class="ib-title">Spots fotográficos</div></div>
       <div class="ib-body">
         <div class="photo-list">
-          <div class="photo-item"><div class="photo-num">01</div><div class="photo-text">Castillo de Rozafa — atardecer con lago y Alpes</div></div>
-          <div class="photo-item"><div class="photo-num">02</div><div class="photo-text">Iglesia de Theth — estampa clásica con montañas</div></div>
-          <div class="photo-item"><div class="photo-num">03</div><div class="photo-text">Valbona Pass (1.795m) — mirador secreto 5 min a la izquierda</div></div>
-          <div class="photo-item"><div class="photo-num">04</div><div class="photo-text">Ferry Lago Koman — el "fiordo albanés" desde cubierta</div></div>
-          <div class="photo-item"><div class="photo-num">05</div><div class="photo-text">Islas de Ksamil — solo desde kayak o barca</div></div>
-          <div class="photo-item"><div class="photo-num" style="color:var(--teal-light)">06</div><div class="photo-text"><strong>★ Lago Bovilla</strong> — embalse turquesa junto a Tirana</div></div>
-          <div class="photo-item"><div class="photo-num">07</div><div class="photo-text">Llogara Pass — primera vista del mar desde la montaña</div></div>
-          <div class="photo-item"><div class="photo-num">08</div><div class="photo-text">La Pirámide de Tirana — skyline desde las escaleras</div></div>
+          <div class="photo-item"><div class="photo-n">01</div><div class="photo-t">Castillo de Rozafa — atardecer con lago y Alpes</div></div>
+          <div class="photo-item"><div class="photo-n">02</div><div class="photo-t">Iglesia de Theth — estampa clásica con montañas</div></div>
+          <div class="photo-item"><div class="photo-n">03</div><div class="photo-t">Valbona Pass (1.795m) — mirador secreto 5 min a la izquierda</div></div>
+          <div class="photo-item"><div class="photo-n">04</div><div class="photo-t">Ferry Lago Koman — el "fiordo albanés" desde cubierta</div></div>
+          <div class="photo-item"><div class="photo-n">05</div><div class="photo-t">Berat de noche — la ciudad de las mil ventanas iluminada</div></div>
+          <div class="photo-item"><div class="photo-n">06</div><div class="photo-t">Islas de Ksamil — solo desde kayak o barca</div></div>
+          <div class="photo-item"><div class="photo-n" style="color:var(--teal-light);opacity:1">07</div><div class="photo-t"><strong>★ Lago Bovilla</strong> — embalse turquesa junto a Tirana</div></div>
+          <div class="photo-item"><div class="photo-n">08</div><div class="photo-t">Llogara Pass — primera vista del mar desde la montaña</div></div>
         </div>
       </div>
     </div>
@@ -1019,13 +1175,15 @@ body{
           <div class="dict-item"><div class="dict-al">Faleminderit</div><div class="dict-es">Gracias</div></div>
           <div class="dict-item"><div class="dict-al">Po / Jo</div><div class="dict-es">Sí / No</div></div>
           <div class="dict-item"><div class="dict-al">Gëzuar!</div><div class="dict-es">¡Salud!</div></div>
+          <div class="dict-item"><div class="dict-al">Sa kushton?</div><div class="dict-es">¿Cuánto cuesta?</div></div>
+          <div class="dict-item"><div class="dict-al">Ujë, ju lutem</div><div class="dict-es">Agua, por favor</div></div>
           <div class="dict-item" style="grid-column:1/-1"><div class="dict-al">Faturën, ju lutem</div><div class="dict-es">La cuenta, por favor</div></div>
         </div>
       </div>
     </div>
 
   </div>
-</div>
+</div><!-- /info -->
 
 <script>
 function show(id, btn) {
@@ -1033,9 +1191,8 @@ function show(id, btn) {
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
+  window.scrollTo({top: document.querySelector('.sticky-nav').offsetTop, behavior: 'smooth'});
 }
 </script>
-</body>
-</html>
 </body>
 </html>
